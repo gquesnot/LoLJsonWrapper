@@ -1,6 +1,5 @@
 import scrapy
 from scrapy import Request
-from lolDatas.lolClass.data_class.datacontroller import DataController
 
 from ..constants import XPATHS_ITEM
 from ..items import Item
@@ -34,9 +33,13 @@ class LolfandomSpider(scrapy.Spider):
     allowed_domains = ['leagueoflegends.fandom.com']
     start_urls = ['http://leagueoflegends.fandom.com/wiki/']
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.itemsName = kwargs.get('itemsName')
+
     def parse(self, response, **kwargs):
-        items = DataController().getItemsNameAsUrl()
-        for itemName in items:
+
+        for itemName in getattr(self, 'itemsName'):
             print(itemName)
             yield Request(url="http://leagueoflegends.fandom.com/wiki/" + itemName, callback=self.parse_item)
 
@@ -46,6 +49,6 @@ class LolfandomSpider(scrapy.Spider):
         for attr in itemAttr:
             resp = response.xpath(XPATHS_ITEM[attr]).extract_first()
 
-            item[attr] = resp if resp is None else resp.replace('+', "").replace("%", "").replace(" ", "")
+            item[attr] = resp if resp is None else int(resp.replace('+', "").replace("%", "").replace(" ", ""))
 
         yield item
