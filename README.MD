@@ -1,4 +1,4 @@
-## Keep Champion and Items from Lol up to date  and ready to use with dataclasses in python [see](https://docs.python.org/3/library/dataclasses.html)
+## Keep Champions and Items from Lol up to date  and ready to use as dataclasses in python [see](https://docs.python.org/3/library/dataclasses.html)
 #### I combined items from dragon data  with items from scraping on lol.fandom to get info i didn't find 
 
 ### Usage
