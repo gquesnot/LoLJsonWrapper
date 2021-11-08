@@ -38,7 +38,7 @@ ldc.champions
 
 
 ### Install 
-````
+````shell
 pip install -r requirements.txt
 ````
 
