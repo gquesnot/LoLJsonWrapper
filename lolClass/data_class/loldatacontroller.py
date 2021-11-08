@@ -131,10 +131,10 @@ class LolDataController():
         for champName, champion in self.championsJson['data'].items():
             if self.downloadNewVersion:
                 champJson = saveJsonApiResponseInJsonFile(self.championInfoUrl.format(self.version, champName),
-                                                          self.basePath + "champions_advanced/{}.json".format(
+                                                          self.basePath + "champions_full/{}.json".format(
                                                               champName))
             else:
-                with open(self.basePath + 'champions_advanced/{}.json'.format(champName), "r") as f:
+                with open(self.basePath + 'champions_full/{}.json'.format(champName), "r") as f:
                     champJson = json.load(f)
             champ = self.champParser(champJson, champion)
             self.champions[champName] = champ
