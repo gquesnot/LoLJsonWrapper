@@ -6,6 +6,10 @@ Just init the LolDataController class and get your data
 
 ````python
 from lolClass.data_class.loldatacontroller import LolDataController
+from lolClass.data_class.item import Item
+from new_data_class.item import Item as ItemCombined
+from lolClass.data_class.champion import Champion
+
 # optional parameter
 # update=True : update if new version
 # forceUpdate=False : force the update
@@ -21,13 +25,13 @@ ldc.itemsCrawlJson
 # raw champion dragon json data
 ldc.championsJson
 
-# dict of items {itemId: lolClass.data_class.item.Item}  from dragon json
+# dict of items {itemId: Item}  from dragon json
 ldc.items
 
-# dict of combined items {itemId: new_data_class.item.Item} from dragon json and scraping
+# dict of combined items {itemId: ItemCombined} from dragon json and scraping
 ldc.itemsCombined
 
-# dict of champ {champName: lolClass.data_class.champion.Champion}
+# dict of champ {champName: Champion}
 ldc.champions
 
 ````
