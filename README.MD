@@ -1,7 +1,7 @@
 ## Keep Champion and Items from Lol up to date  and ready to use with dataclasses in python [see](https://docs.python.org/3/library/dataclasses.html)
 #### I combined items from dragon data  with items from scraping on lol.fandom to get info i didn't find 
 
-###Usage
+### Usage
 Just init the LolDataController class and get your data
 
 ````python
