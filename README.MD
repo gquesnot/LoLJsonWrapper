@@ -42,4 +42,8 @@ ldc.champions
 pip install -r requirements.txt
 ````
 
+### TODO
+- organize directory
+- add other data
+
 
