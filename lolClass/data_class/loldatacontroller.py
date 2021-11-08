@@ -46,7 +46,6 @@ class LolDataController():
     def __init__(self, update=True, forceUpdate=False):
         self.update = update
         self.forceUpdate = forceUpdate
-        print(os.getcwd())
         self.checkVersion()
         self.loadChampions()
         self.loadItems()
