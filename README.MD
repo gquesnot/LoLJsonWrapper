@@ -1,5 +1,4 @@
-## Combine dragondata item and champion with scrapping on lol.fandom to get them as data_class
-
+## Combine dragon data items and champions with item scraping on lol.fandom to combine and get them as dataclasses [see](https://docs.python.org/3/library/dataclasses.html)
 
 ###Usage
 Just init the LolDataController class and get your data
@@ -11,18 +10,18 @@ from new_data_class.item import Item as ItemCombined
 from lolClass.data_class.champion import Champion
 
 # optional parameter
-# update=True : update if new version
-# forceUpdate=False : force the update
-ldc = LolDataController()
+# update       default = True      update if new version
+# forceUpdate  default = False     force the update
+ldc = LolDataController(update=True, forceUpdate=False)
 
 # ATTRIBUTES
-# raw items dragon json data 
+# raw items json data from dragon 
 ldc.itemsJson
 
-# raw items scrapping json data
+# raw items json data from scraping
 ldc.itemsCrawlJson
 
-# raw champion dragon json data
+# raw champion json data from dragon 
 ldc.championsJson
 
 # dict of items {itemId: Item}  from dragon json
