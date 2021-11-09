@@ -10,7 +10,7 @@
   <component name="PyNamespacePackagesService">
     <option name="namespacePackageFolders">
       <list>
-        <option value="$MODULE_DIR$/lolDatas" />
+        <option value="$MODULE_DIR$/scraper" />
       </list>
     </option>
   </component>

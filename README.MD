@@ -1,40 +1,18 @@
-## Keep Champions and Items from Lol up to date  and ready to use as dataclasses in python [see](https://docs.python.org/3/library/dataclasses.html)
-#### I combined items from dragon data  with items from scraping on lol.fandom to get info i didn't find 
+## LoL Json Wrapper in Python to give you Interface for LoL JSON Datas 
+#### The objective of this project is to remove the complexity and boring stuff in the use of LOL / TFT raw json data. 
+
+- auto update Dragon Data
+- auto scrap missing items info
+- load only the desired data 
+- give you dataclasses for Champions and items [see](https://docs.python.org/3/library/dataclasses.html)
+
+
 
 ### Usage
-Just init the LolDataController class and get your data
 
-````python
-from lolClass.data_class.loldatacontroller import LolDataController
-from lolClass.data_class.item import Item
-from new_data_class.item import Item as ItemCombined
-from lolClass.data_class.champion import Champion
+look  the file [main.py](main.py)
 
-# optional parameter
-# update       default = True      update if new version
-# forceUpdate  default = False     force the update
-ldc = LolDataController(update=True, forceUpdate=False)
 
-# ATTRIBUTES
-# raw items json data from dragon 
-ldc.itemsJson
-
-# raw items json data from scraping
-ldc.itemsCrawlJson
-
-# raw champion json data from dragon 
-ldc.championsJson
-
-# dict of items {itemId: Item}  from dragon json
-ldc.items
-
-# dict of combined items {itemId: ItemCombined} from dragon json and scraping
-ldc.itemsCombined
-
-# dict of champ {champName: Champion}
-ldc.champions
-
-````
 
 
 ### Install 
@@ -43,7 +21,8 @@ pip install -r requirements.txt
 ````
 
 ### TODO
-- organize directory
-- add other data
+- API dataclasses Interface to reformat json data from api in better way
+- TFT dataclasses
+- Controller to make operation on data
 
 
