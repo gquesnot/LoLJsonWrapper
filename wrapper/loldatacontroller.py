@@ -1,7 +1,6 @@
-import copy
 import json
 import os
-from typing import List, Dict
+from typing import Dict
 
 import requests
 from dacite import from_dict
@@ -14,7 +13,7 @@ from my_dataclass.lol.item.item import Item
 from my_dataclass.lol.map import Map
 from my_dataclass.lol.queue import Queue
 from my_dataclass.lol.season import Season
-from my_dataclass.lol.spell.summonerspell import SummonerSpell
+from my_dataclass.lol.summonerspell import SummonerSpell
 from my_dataclass.lolapi.summoner.profileicon import ProfileIcon
 from util.dataclass_function import ownCapitalize
 from util.jsonfunction import saveJsonApiResponseInJsonFile

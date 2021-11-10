@@ -1,11 +1,11 @@
 from dataclasses import dataclass, field, asdict
-from typing import Any, Union, List, Dict
+from typing import Any, Dict
 from dacite import from_dict
 import keyword
 
 from my_dataclass.lol.champion.champion import Champion
 from my_dataclass.lol.item.itemcombined import ItemCombined
-from my_dataclass.lol.spell.summonerspell import SummonerSpell
+from my_dataclass.lol.summonerspell import SummonerSpell
 from my_dataclass.lolapi.match.perk.perk import Perk
 from my_dataclass.lolapi.summoner.summoner import Summoner
 
