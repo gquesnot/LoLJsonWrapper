@@ -8,7 +8,14 @@ from dacite import from_dict
 from scrapy.crawler import CrawlerProcess
 
 from my_dataclass.lol.champion.champion import Champion
+from my_dataclass.lol.gamemode import GameMode
+from my_dataclass.lol.gametype import GameType
 from my_dataclass.lol.item.item import Item
+from my_dataclass.lol.map import Map
+from my_dataclass.lol.queue import Queue
+from my_dataclass.lol.season import Season
+from my_dataclass.lol.spell.summonerspell import SummonerSpell
+from my_dataclass.lolapi.summoner.profileicon import ProfileIcon
 from util.dataclass_function import ownCapitalize
 from util.jsonfunction import saveJsonApiResponseInJsonFile
 from scraper.lolDatas.spiders.lolfandom import LolfandomSpider
@@ -20,10 +27,25 @@ class LolDataController():
     championsUrl = "http://ddragon.leagueoflegends.com/cdn/{}/data/en_US/champion.json"
     itemsUrl = "http://ddragon.leagueoflegends.com/cdn/{}/data/en_US/item.json"
     championInfoUrl = "http://ddragon.leagueoflegends.com/cdn/{}/data/en_US/champion/{}.json"
+    summonerSpellUrl = "http://ddragon.leagueoflegends.com/cdn/{}/data/en_US/summoner.json"
+    profileIconeUrl = "http://ddragon.leagueoflegends.com/cdn/{}/data/en_US/profileicon.json"
+    seasonUrl = "https://static.developer.riotgames.com/docs/lol/seasons.json"
+    queueUrl = "https://static.developer.riotgames.com/docs/lol/queues.json"
+    mapUrl = "https://static.developer.riotgames.com/docs/lol/maps.json"
+    gameModeUrl = "https://static.developer.riotgames.com/docs/lol/gameModes.json"
+    gameTypeUrl = "https://static.developer.riotgames.com/docs/lol/gameTypes.json"
     downloadNewVersion = False
     basePath = "json_data/"
     mappedLoading = {
         "lol": [
+            "profileIcons",
+            "summonerSpells",
+            "seasons",
+            "gameModes",
+            "gameTypes",
+            "maps",
+            "queues",
+
             "champions",
             "items",
             "itemsCombined"
@@ -42,8 +64,23 @@ class LolDataController():
     championsJsonLight = {}
     championsJsonFull = {}
     itemsCombined: Dict[str, ItemCombined] = {}
+    profileIcons: Dict[str, ProfileIcon] = {}
+    summonerSpells: Dict[str, SummonerSpell] = {}
+    maps: Dict[str, Map] = {}
+    gameModes: Dict[str, GameMode] = {}
+    gameTypes: Dict[str, GameType] = {}
+    seasons: Dict[str, Season] = {}
+    queues: Dict[str, Queue] = {}
+
     itemsCrawlJson = []
     itemsCombinedJson = {}
+    profileIconsJson = {}
+    summonerSpellsJson = {}
+    seasonsJson = {}
+    queuesJson = {}
+    mapsJson = {}
+    gameModesJson = {}
+    gameTypesJson = {}
     itemKeys = {
         "hp": "FlatHPPoolMod",
         "mp": "FlatMPPoolMod",
@@ -126,12 +163,9 @@ class LolDataController():
 
         return from_dict(data_class=Item, data=newDict)
 
-    def champParser(self, champJson, champion):
-
-        return
-
     def initLolChampions(self):
         if self.downloadNewVersion:
+
             print("updating lol champions ... ")
             self.championsJsonLight = saveJsonApiResponseInJsonFile(self.championsUrl.format(self.version),
                                                                     self.basePath + "champions_light.json")['data']
@@ -155,6 +189,7 @@ class LolDataController():
             self.champions[champName] = Champion.from_dict(champFull, champLight)
 
     def initLolItems(self):
+
         if self.downloadNewVersion:
             print("updating items ... ")
             self.itemsJson = saveJsonApiResponseInJsonFile(self.itemsUrl.format(self.version),
@@ -171,7 +206,7 @@ class LolDataController():
 
         return [item['name'].replace(" ", "_") for k, item in self.itemsJson.items()]
 
-    def initLolCrawledItems(self):
+    def initLolItemsCombined(self):
         if self.downloadNewVersion:
             print("updating crawled items ... ")
             self.crawlItems()
@@ -247,7 +282,7 @@ class LolDataController():
             getattr(self, f"init{hintC}")()
             print(f" done")
             for config in allConfig:
-
+                print(config)
                 if config in configs:
                     configC = ownCapitalize(config)
                     print(f"loading {hint} {config} ...", end="")
@@ -257,15 +292,121 @@ class LolDataController():
         else:
             print("HAS ERROR IN HINT")
 
+    def initLolProfileIcons(self):
+        if self.downloadNewVersion:
+            print("updating icons ... ")
+            self.profileIconsJson = saveJsonApiResponseInJsonFile(self.profileIconeUrl.format(self.version),
+                                                                  self.basePath + "profile_icons.json")['data']
+        else:
+            with open(self.basePath + "profile_icons.json", "r") as f:
+                self.profileIconsJson = json.load(f)['data']
+
+    def loadLolProfileIcons(self):
+        for iconId, icon in self.profileIconsJson.items():
+            self.profileIcons[iconId] = ProfileIcon.from_dict(icon)
+            print(self.profileIcons[iconId])
+
+    def initLolSummonerSpells(self):
+        if self.downloadNewVersion:
+            print("updating summoner spell ... ")
+            self.summonerSpellsJson = saveJsonApiResponseInJsonFile(self.summonerSpellUrl.format(self.version),
+                                                                    self.basePath + "summoner_spells.json")['data']
+        else:
+            with open(self.basePath + "summoner_spells.json", "r") as f:
+                self.summonerSpellsJson = json.load(f)['data']
+
+    def loadLolSummonerSpells(self):
+        for summonerSpellName, summonerSpell in self.summonerSpellsJson.items():
+            sSpell = SummonerSpell.from_dict(summonerSpell)
+            print(sSpell)
+            self.summonerSpells[str(sSpell.id)] = sSpell
+
+    def initLolSeasons(self):
+        if self.downloadNewVersion:
+            print("updating seasons ... ")
+            self.seasonsJson = saveJsonApiResponseInJsonFile(self.seasonUrl,
+                                                             self.basePath + "seasons.json")
+        else:
+            with open(self.basePath + "seasons.json", "r") as f:
+                self.seasonsJson = json.load(f)
+
+    def loadLolSeasons(self):
+        for season in self.seasonsJson:
+            sSeason = Season.from_dict(season)
+            self.seasons[str(sSeason.id)] = sSeason
+
+    def initLolQueues(self):
+        if self.downloadNewVersion:
+            print("updating queues ... ")
+            self.queuesJson = saveJsonApiResponseInJsonFile(self.queueUrl,
+                                                            self.basePath + "queues.json")
+        else:
+            with open(self.basePath + "queues.json", "r") as f:
+                self.queuesJson = json.load(f)
+
+    def loadLolQueues(self):
+        for queue_ in self.queuesJson:
+            myMap = self.maps[queue_['map']] if queue_['map'] in self.maps else None
+            sQueue = Queue.from_dict(queue_, myMap)
+            print(sQueue)
+            self.queues[str(sQueue.id)] = sQueue
+
+    def initLolMaps(self):
+        if self.downloadNewVersion:
+            print("updating maps ... ")
+            self.mapsJson = saveJsonApiResponseInJsonFile(self.mapUrl,
+                                                          self.basePath + "maps.json")
+        else:
+            with open(self.basePath + "maps.json", "r") as f:
+                self.mapsJson = json.load(f)
+
+    def loadLolMaps(self):
+        for map_ in self.mapsJson:
+            sMap = Map.from_dict(map_)
+            print(sMap)
+            self.maps[sMap.name] = sMap
+
+    def initLolGameModes(self):
+        if self.downloadNewVersion:
+            print("updating game modes ... ")
+            self.gameModesJson = saveJsonApiResponseInJsonFile(self.gameModeUrl,
+                                                               self.basePath + "game_modes.json")
+        else:
+            with open(self.basePath + "game_modes.json", "r") as f:
+                self.gameModesJson = json.load(f)
+
+    def loadLolGameModes(self):
+        for gameMode in self.gameModesJson:
+            sGameMode = GameMode.from_dict(gameMode)
+            print(sGameMode)
+            self.gameModes[sGameMode.name] = sGameMode
+
+    def initLolGameTypes(self):
+        if self.downloadNewVersion:
+            print("updating game types ... ")
+            self.gameTypesJson = saveJsonApiResponseInJsonFile(self.gameTypeUrl,
+                                                               self.basePath + "game_types.json")
+        else:
+            with open(self.basePath + "game_types.json", "r") as f:
+                self.gameTypesJson = json.load(f)
+
+    def loadLolGameTypes(self):
+        for gameType in self.gameTypesJson:
+            sGameType = GameType.from_dict(gameType)
+            print(sGameType)
+            self.gameTypes[sGameType.name] = sGameType
+
     def initLol(self):
-        self.initLolChampions()
-        self.initLolItems()
-        self.initLolCrawledItems()
+        for config in self.mappedLoading['lol']:
+            getattr(self, f"initLol{ownCapitalize(config)}")()
+
+        # self.initLolChampions()
+        # self.initLolItems()
+        # self.initLolCrawledItems()
 
     def initTft(self):
-        self.initTftChampions()
-        self.initTftItems()
-        self.initTftTraits()
+        for config in self.mappedLoading['tft']:
+            getattr(self, f"initTft{ownCapitalize(config)}")()
 
     def combineItems(self):
         resItems = dict()
@@ -286,4 +427,13 @@ class LolDataController():
         pass
 
     def initTftTraits(self):
+        pass
+
+    def loadTftChampion(self):
+        pass
+
+    def LoadTftItems(self):
+        pass
+
+    def LoadTftTraits(self):
         pass

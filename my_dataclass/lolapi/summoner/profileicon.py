@@ -14,7 +14,10 @@ class ProfileIcon:
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "ProfileIcon":
-        data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
+        #data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
+        if isinstance(data['id'], str):
+            data['id'] = int(data['id'])
+
         return from_dict(cls, data=data)
 
     def to_dict(self) -> Dict[str, Any]:

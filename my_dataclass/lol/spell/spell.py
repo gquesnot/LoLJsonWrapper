@@ -39,7 +39,7 @@ class Spell:
         data['spellByLevel'] = [SpellLvl.from_dict({
             "cooldown": data['cooldown'][i],
             "cost": data['cost'][i],
-            "effects": [v[0] if v is not None else None for v in
+            "effects": [v[i] if v is not None else None for v in
                         [[v for v in vv] if vv is not None else None for vv in data['effect']]],
             "range": data['range'][i],
             "lvl": i + 1
