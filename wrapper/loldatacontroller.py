@@ -35,7 +35,7 @@ class LolDataController():
     gameTypeUrl = "https://static.developer.riotgames.com/docs/lol/gameTypes.json"
     downloadNewVersion = False
     basePath = "json_data/"
-    mappedLoading = {
+    mappedConfig = {
         "lol": [
             "profileIcons",
             "summonerSpells",
@@ -57,11 +57,9 @@ class LolDataController():
 
     }
 
+    # classes
     champions: Dict[str, Champion] = {}
     items: Dict[str, Item] = {}
-    itemsJson = {}
-    championsJsonLight = {}
-    championsJsonFull = {}
     itemsCombined: Dict[str, ItemCombined] = {}
     profileIcons: Dict[str, ProfileIcon] = {}
     summonerSpells: Dict[str, SummonerSpell] = {}
@@ -71,6 +69,7 @@ class LolDataController():
     seasons: Dict[str, Season] = {}
     queues: Dict[str, Queue] = {}
 
+    # json data
     itemsCrawlJson = []
     itemsCombinedJson = {}
     profileIconsJson = {}
@@ -80,6 +79,10 @@ class LolDataController():
     mapsJson = {}
     gameModesJson = {}
     gameTypesJson = {}
+    itemsJson = {}
+    championsJsonLight = {}
+    championsJsonFull = {}
+
     itemKeys = {
         "hp": "FlatHPPoolMod",
         "mp": "FlatMPPoolMod",
@@ -266,8 +269,8 @@ class LolDataController():
         return dataItem
 
     def load(self, hint="lol", configs=None):
-        if hint in self.mappedLoading.keys():
-            allConfig = self.mappedLoading[hint]
+        if hint in self.mappedConfig.keys():
+            allConfig = self.mappedConfig[hint]
             if configs is not None:
                 hasError = len([1 for config in configs if config not in allConfig]) != 0
                 if hasError:
@@ -396,7 +399,7 @@ class LolDataController():
             self.gameTypes[sGameType.name] = sGameType
 
     def initLol(self):
-        for config in self.mappedLoading['lol']:
+        for config in self.mappedConfig['lol']:
             getattr(self, f"initLol{ownCapitalize(config)}")()
 
         # self.initLolChampions()
@@ -404,7 +407,7 @@ class LolDataController():
         # self.initLolCrawledItems()
 
     def initTft(self):
-        for config in self.mappedLoading['tft']:
+        for config in self.mappedConfig['tft']:
             getattr(self, f"initTft{ownCapitalize(config)}")()
 
     def combineItems(self):
