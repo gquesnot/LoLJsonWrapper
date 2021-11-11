@@ -1,13 +1,12 @@
 from dataclasses import dataclass, field, asdict
-from typing import Any, List, Dict, Type, Union
+from typing import Any, List, Dict, Union
+
 from dacite import from_dict
-import keyword
 
-from my_dataclass.lol.champion.champion import Champion
-from my_dataclass.image import Image
-from my_dataclass.lol.item.item_stats import ItemStats
 from my_dataclass.gold import Gold
-
+from my_dataclass.image import Image
+from my_dataclass.lol.champion.champion import Champion
+from my_dataclass.lol.item.item_stats import ItemStats
 
 
 @dataclass

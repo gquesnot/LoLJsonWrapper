@@ -1,24 +1,8 @@
 import json
 import os
-from typing import Dict
 
 import requests
-from dacite import from_dict
-from scrapy.crawler import CrawlerProcess
 
-from my_dataclass.lol.champion.champion import Champion
-from my_dataclass.lol.game_mode import GameMode
-from my_dataclass.lol.game_type import GameType
-from my_dataclass.lol.item.item import Item
-from my_dataclass.lol.map import Map
-from my_dataclass.lol.queue import Queue
-from my_dataclass.lol.season import Season
-from my_dataclass.lol.summoner_spell import SummonerSpell
-from my_dataclass.lolapi.summoner.profile_icon import ProfileIcon
-from util.dataclass_function import ownCapitalize
-from util.json_function import saveJsonApiResponseInJsonFile
-from scraper.lolDatas.spiders.lolfandom import LolfandomSpider
-from my_dataclass.lol.item.item_combined import ItemCombined
 from wrapper.lol_wrapper import LolWrapper
 from wrapper.tft_wrapper import TftWrapper
 

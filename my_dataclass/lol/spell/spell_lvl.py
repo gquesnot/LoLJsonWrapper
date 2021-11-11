@@ -1,8 +1,9 @@
 
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, asdict
 from typing import Any, Union, List, Dict
+
 from dacite import from_dict
-import keyword
+
 
 @dataclass
 class SpellLvl:

@@ -1,8 +1,8 @@
 
-from dataclasses import dataclass, field, asdict
-from typing import Any, Union, List, Dict
+from dataclasses import dataclass, asdict
+from typing import Any, List, Dict
+
 from dacite import from_dict
-import keyword
 
 from my_dataclass.tft.trait.set import Set
 from my_dataenum.tft.trait_types import TraitType

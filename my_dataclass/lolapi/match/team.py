@@ -1,7 +1,8 @@
-from dataclasses import dataclass, field, asdict
-from typing import Any, Union, List, Dict
-from dacite import from_dict
 import keyword
+from dataclasses import dataclass, field, asdict
+from typing import Any, List, Dict
+
+from dacite import from_dict
 
 from my_dataclass.lolapi.match.ban import Ban
 from my_dataclass.lolapi.match.objectives import Objectives

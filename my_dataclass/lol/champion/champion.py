@@ -1,11 +1,10 @@
-import keyword
 from dataclasses import dataclass, asdict, field
 from typing import Dict, Any, List
 
 from dacite import from_dict
 
-from my_dataclass.lol.champion.champion_stats import ChampionStats
 from my_dataclass.image import Image
+from my_dataclass.lol.champion.champion_stats import ChampionStats
 from my_dataclass.lol.champion.info import Info
 from my_dataclass.lol.champion.skin import Skin
 from my_dataclass.lol.spell.spell import Spell

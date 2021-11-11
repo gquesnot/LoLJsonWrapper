@@ -5,22 +5,21 @@ from typing import Dict
 from dacite import from_dict
 from scrapy.crawler import CrawlerProcess
 
-
-from my_dataclass.lol.item.item_combined import ItemCombined
-from my_dataenum.config_index import ConfigIndex
-from scraper.lolDatas.spiders.lolfandom import LolfandomSpider
-from util.json_function import saveJsonApiResponseInJsonFile, getJson
-from util.base_wrapper import BaseWrapper
-from util.base_wrapper_function import  getItemsNameAsUrl, withoutDataDict
 from my_dataclass.lol.champion.champion import Champion
 from my_dataclass.lol.game_mode import GameMode
 from my_dataclass.lol.game_type import GameType
 from my_dataclass.lol.item.item import Item
+from my_dataclass.lol.item.item_combined import ItemCombined
 from my_dataclass.lol.map import Map
 from my_dataclass.lol.queue import Queue
 from my_dataclass.lol.season import Season
 from my_dataclass.lol.summoner_spell import SummonerSpell
 from my_dataclass.lolapi.summoner.profile_icon import ProfileIcon
+from my_dataenum.config_index import ConfigIndex
+from scraper.lolDatas.spiders.lolfandom import LolfandomSpider
+from util.base_wrapper import BaseWrapper
+from util.base_wrapper_function import getItemsNameAsUrl, withoutDataDict
+from util.json_function import saveJsonApiResponseInJsonFile, getJson
 
 
 class LolWrapper(BaseWrapper):

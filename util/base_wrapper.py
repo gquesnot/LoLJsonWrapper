@@ -1,12 +1,13 @@
 from __future__ import annotations
+
 import json
 import os.path
 from typing import Dict, Any, List
 
 from my_dataclass.wrapper_config import WrapperConfig
+from util.base_wrapper_function import getClassAsKeyClass
 from util.dataclass_function import ownCapitalize
 from util.json_function import saveJsonApiResponseInJsonFile
-from util.base_wrapper_function import getClassAsKeyClass
 
 
 class BaseWrapper:

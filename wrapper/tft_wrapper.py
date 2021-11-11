@@ -1,6 +1,6 @@
+import zipfile
 from typing import Dict
 from urllib.request import urlretrieve
-import zipfile
 
 from my_dataclass.tft.champion.champion import Champion
 from my_dataclass.tft.item.item import Item

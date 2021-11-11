@@ -1,7 +1,8 @@
-from dataclasses import dataclass, field, asdict
-from typing import Any, Union, List, Dict
-from dacite import from_dict
 import keyword
+from dataclasses import dataclass, field, asdict
+from typing import Any, Dict
+
+from dacite import from_dict
 
 from my_dataclass.position import Position
 

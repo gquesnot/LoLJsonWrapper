@@ -1,8 +1,9 @@
 
 from dataclasses import dataclass, field, asdict
-from typing import Any, Union, List, Dict
+from typing import Any, Union, Dict
+
 from dacite import from_dict
-import keyword
+
 
 @dataclass
 class Set:

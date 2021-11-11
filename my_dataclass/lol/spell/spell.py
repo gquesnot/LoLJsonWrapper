@@ -1,12 +1,12 @@
 from dataclasses import dataclass, asdict, field
 from typing import Any, Union, List, Dict
+
 from dacite import from_dict
-import keyword
 
 from my_dataclass.image import Image
 from my_dataclass.lol.spell.spell_lvl import SpellLvl
 from my_dataclass.lol.spell.spell_tip import SpellTip
-from util.dataclass_function import mapDataClassFields, strToFloatList
+from util.dataclass_function import mapDataClassFields
 
 
 @dataclass

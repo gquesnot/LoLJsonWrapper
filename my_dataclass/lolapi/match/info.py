@@ -1,7 +1,8 @@
-from dataclasses import dataclass, field, asdict
-from typing import Any,  List, Dict
-from dacite import from_dict
 import keyword
+from dataclasses import dataclass, field, asdict
+from typing import Any, List, Dict
+
+from dacite import from_dict
 
 from my_dataclass.lolapi.base_info import BaseInfo
 from my_dataclass.lolapi.match.team import Team

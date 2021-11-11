@@ -1,7 +1,8 @@
+import keyword
 from dataclasses import dataclass, asdict
 from typing import Any, List, Dict
+
 from dacite import from_dict
-import keyword
 
 from my_dataclass.lolapi.match.perk.stats import Stats
 from my_dataclass.lolapi.match.perk.style import Style

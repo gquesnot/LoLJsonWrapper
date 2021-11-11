@@ -1,7 +1,8 @@
+import keyword
 from dataclasses import dataclass, field, asdict
 from typing import Any, Dict
+
 from dacite import from_dict
-import keyword
 
 from my_dataclass.lol.champion.champion import Champion
 from my_dataclass.lol.item.item_combined import ItemCombined
