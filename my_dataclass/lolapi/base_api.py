@@ -4,7 +4,7 @@ from dacite import from_dict
 import keyword
 
 from my_dataclass.lolapi.match.info import Info as MatchInfo
-from my_dataclass.lolapi.matchtimeline.info import Info as MatchTimeLineInfo
+from my_dataclass.lolapi.match_timeline.info import Info as MatchTimeLineInfo
 from my_dataclass.lolapi.metadata import Metadata
 
 

@@ -3,8 +3,8 @@ from typing import Any, Union, List, Dict
 from dacite import from_dict
 import keyword
 
-from my_dataclass.lolapi.matchtimeline.event import Event
-from my_dataclass.lolapi.matchtimeline.participantFrame import ParticipantFrame
+from my_dataclass.lolapi.match_timeline.event import Event
+from my_dataclass.lolapi.match_timeline.participant_frame import ParticipantFrame
 
 
 @dataclass

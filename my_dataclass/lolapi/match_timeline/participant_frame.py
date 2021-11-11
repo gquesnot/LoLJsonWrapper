@@ -4,7 +4,7 @@ from dacite import from_dict
 import keyword
 
 from my_dataclass.lol.champion.champion_stats import ChampionStats
-from my_dataclass.lolapi.matchtimeline.damage_stat import DamageStat
+from my_dataclass.lolapi.match_timeline.damage_stat import DamageStat
 from my_dataclass.position import Position
 
 

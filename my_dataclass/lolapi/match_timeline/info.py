@@ -4,7 +4,7 @@ from dacite import from_dict
 import keyword
 
 from my_dataclass.lolapi.base_info import BaseInfo
-from my_dataclass.lolapi.matchtimeline.frame import Frame
+from my_dataclass.lolapi.match_timeline.frame import Frame
 
 
 @dataclass
