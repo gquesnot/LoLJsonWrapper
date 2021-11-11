@@ -8,10 +8,14 @@ if __name__ == '__main__':
     # init function with his default parameter
     dc = LolDataController(update=True, forceUpdate=False)
 
-    # change jsonDownloadUrl in tftWrapper if new update and run downloadJson()
+    # change jsonDownloadUrl in tftWrapper if new update and run the command below
     # dc.tft.downloadJson()
 
+    # update if needed or forced and load all dataclasses , you can clean jsonData with param clean
+    # dc.lol.load(clean=True)
     dc.lol.load()
+
+    # load  all tft dataclasses
     dc.tft.load()
 
     # TFT

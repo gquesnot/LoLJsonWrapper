@@ -24,7 +24,7 @@ class BaseWrapper:
         self.configs = [WrapperConfig.from_dict(idx, config) for idx, config in enumerate(self.configsDict)]
         self.allConfig = [config.name for config in self.configs]
 
-    def load(self, configsList=None):
+    def load(self, configsList=None, clean=True):
         if configsList is not None:
             hasError = len([1 for config in configsList if config not in self.allConfig]) != 0
             if hasError:
@@ -48,6 +48,13 @@ class BaseWrapper:
                 config = self.configs[idx]
                 setattr(self, config.name, config.datas)
                 print(f"done")
+        if clean:
+            self.cleanJson()
+
+    def cleanJson(self):
+        for config in self.configs:
+            if config.json is not None:
+                config.json = None
 
     def initConfigs(self):
         for idx, config in enumerate(self.configs):
