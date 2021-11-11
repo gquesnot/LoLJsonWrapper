@@ -5,7 +5,7 @@ from dacite import from_dict
 import keyword
 
 from my_dataclass.image import Image
-from my_dataclass.lol.spell.spelllvl import SpellLvl
+from my_dataclass.lol.spell.spell_lvl import SpellLvl
 
 
 @dataclass

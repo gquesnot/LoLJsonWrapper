@@ -5,7 +5,7 @@ import keyword
 
 from my_dataclass.lol.champion.champion import Champion
 from my_dataclass.image import Image
-from my_dataclass.lol.item.itemstats import ItemStats
+from my_dataclass.lol.item.item_stats import ItemStats
 from my_dataclass.gold import Gold
 
 

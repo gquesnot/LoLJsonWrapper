@@ -1,5 +1,3 @@
-from wrapper.base_wrapper import BaseWrapper
-from wrapper.base_wrapper_function import valToStr, getClassAsKeyClass, getItemsNameAsUrl, withoutDataDict
-from wrapper.loldatacontroller import LolDataController
-from wrapper.lolWrapper import LolWrapper
-from wrapper.tftWrapper import TftWrapper
+from wrapper.lol_data_controller import LolDataController
+from wrapper.lol_wrapper import LolWrapper
+from wrapper.tft_wrapper import TftWrapper

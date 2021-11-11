@@ -4,7 +4,7 @@ from typing import Dict, Any, List
 
 from dacite import from_dict
 
-from my_dataclass.lol.champion.champstats import ChampStats
+from my_dataclass.lol.champion.champion_stats import ChampionStats
 from my_dataclass.image import Image
 from my_dataclass.lol.champion.info import Info
 from my_dataclass.lol.champion.skin import Skin
@@ -39,7 +39,7 @@ class Champion:
     image: Image
     tags: List[str]
     partype: str
-    stats: ChampStats
+    stats: ChampionStats
     enemytips: List[str]
     allytips: List[str]
     lore: str
@@ -56,7 +56,7 @@ class Champion:
         toMap = {
             "stats": {
                 "list": False,
-                "type": ChampStats,
+                "type": ChampionStats,
             },
             "skins": {
                 "list": True,

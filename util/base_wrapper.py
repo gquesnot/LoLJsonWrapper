@@ -4,10 +4,9 @@ import os.path
 from typing import Dict, Any, List
 
 from my_dataclass.wrapper_config import WrapperConfig
-from my_dataenum.config_index import ConfigIndex
 from util.dataclass_function import ownCapitalize
-from util.jsonfunction import saveJsonApiResponseInJsonFile
-from wrapper.base_wrapper_function import getClassAsKeyClass
+from util.json_function import saveJsonApiResponseInJsonFile
+from util.base_wrapper_function import getClassAsKeyClass
 
 
 class BaseWrapper:

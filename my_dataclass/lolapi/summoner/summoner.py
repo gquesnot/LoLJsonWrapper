@@ -3,7 +3,7 @@ from typing import Any, Union, List, Dict
 from dacite import from_dict
 import keyword
 
-from my_dataclass.lolapi.summoner.profileicon import ProfileIcon
+from my_dataclass.lolapi.summoner.profile_icon import ProfileIcon
 
 
 @dataclass

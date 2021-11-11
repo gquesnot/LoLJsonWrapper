@@ -3,14 +3,14 @@ from typing import Any, Union, List, Dict
 from dacite import from_dict
 import keyword
 
-from my_dataclass.lol.champion.champstats import ChampStats
-from my_dataclass.lolapi.matchtimeline.damageStat import DamageStat
+from my_dataclass.lol.champion.champion_stats import ChampionStats
+from my_dataclass.lolapi.matchtimeline.damage_stat import DamageStat
 from my_dataclass.position import Position
 
 
 @dataclass
 class ParticipantFrame:
-    championStats: ChampStats
+    championStats: ChampionStats
     damageStats: DamageStat
     position: Position
     currentGold: int = field(default=0)

@@ -1,9 +1,8 @@
 from dataclasses import dataclass, field, asdict
 from typing import Any, Union, List, Dict
 from dacite import from_dict
-import keyword
 
-import wrapper.base_wrapper
+import util
 from my_dataenum.config_index import ConfigIndex
 
 
@@ -21,7 +20,7 @@ class WrapperConfig:
     json: Union[List, Dict] = field(default=None)
 
     def setJson(self, datas):
-        datas = wrapper.withoutDataDict(datas)
+        datas = util.withoutDataDict(datas)
         if self.url is not None and (isinstance(self.url, list) and len(self.url) > 1):
             if self.json is None:
                 self.json = []

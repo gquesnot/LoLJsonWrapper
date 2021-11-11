@@ -6,7 +6,7 @@ from my_dataclass.tft.champion.champion import Champion
 from my_dataclass.tft.item.item import Item
 from my_dataclass.tft.trait.trait import Trait
 from my_dataenum.config_index import ConfigIndex
-from wrapper.base_wrapper import BaseWrapper
+from util.base_wrapper import BaseWrapper
 
 
 class TftWrapper(BaseWrapper):

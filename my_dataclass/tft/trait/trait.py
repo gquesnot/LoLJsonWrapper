@@ -5,7 +5,7 @@ from dacite import from_dict
 import keyword
 
 from my_dataclass.tft.trait.set import Set
-from my_dataenum.tft.traittype import TraitType
+from my_dataenum.tft.trait_types import TraitType
 
 
 @dataclass

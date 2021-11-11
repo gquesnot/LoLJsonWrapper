@@ -2,7 +2,7 @@ import json
 import zipfile
 from urllib.request import urlretrieve
 
-from wrapper.loldatacontroller import LolDataController
+from wrapper.lol_data_controller import LolDataController
 
 if __name__ == '__main__':
     # init function with his default parameter

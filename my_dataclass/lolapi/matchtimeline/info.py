@@ -3,7 +3,7 @@ from typing import Any,  List, Dict
 from dacite import from_dict
 import keyword
 
-from my_dataclass.lolapi.baseinfo import BaseInfo
+from my_dataclass.lolapi.base_info import BaseInfo
 from my_dataclass.lolapi.matchtimeline.frame import Frame
 
 

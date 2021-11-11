@@ -5,7 +5,7 @@ import keyword
 
 
 @dataclass
-class ChampStats:
+class ChampionStats:
     hp: float = field(default=0)
     mp: float = field(default=0)
     movespeed: float = field(default=0)
@@ -41,7 +41,7 @@ class ChampStats:
     healshieldpower: float = field(default=0)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "ChampStats":
+    def from_dict(cls, data: Dict[str, Any]) -> "ChampionStats":
         data = {k if k in keyword.kwlist else k + "_": v for k, v in data.items()}
         return from_dict(cls, data=data)
 
