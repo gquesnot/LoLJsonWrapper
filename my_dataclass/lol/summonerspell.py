@@ -26,8 +26,10 @@ class SummonerSpell:
     ressource: Union[None, str]
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "SummonerSpell":
+    def from_dict(cls, data: Dict[str, Any]) -> Union["SummonerSpell", None]:
         #data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
+        if "key" not in data:
+            return None
         data['id'] = int(data['key'])
         data['maxammo'] = int(data['maxammo'])
         data['spellByLevel'] = {

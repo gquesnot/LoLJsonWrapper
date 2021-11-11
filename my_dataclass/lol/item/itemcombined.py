@@ -37,9 +37,30 @@ class ItemCombined:
 
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "ItemCombined":
-        #data = {k if k not in keyword.kwlist else f"{k}_": v for k, v in data.items()}
-        return from_dict(cls, data=data)
+    def from_dict(cls, itemId: int,champions:Dict[str, Champion], crawlItem: Dict[str, Any],dataItem: Dict[str, Any]) -> "ItemCombined":
+        dataItem['id'] = int(itemId)
+        dataItem['stats'] = {k: v for k, v in crawlItem.items() if k != "name"}
+        for k, v in dataItem['stats'].items():
+            if "percent" in k and v is not None:
+                dataItem['stats'][k] = round(v / 100, 2)
+        if "requiredChampion" in dataItem.keys():
+            champName = dataItem["requiredChampion"]
+            champion = None
+            if champName not in champions.keys():
+
+                if champName.capitalize() not in champions.keys():
+                    print("ERRROR")
+                else:
+                    champion = champions[champName.capitalize()]
+            else:
+                champion = champions[champName]
+
+            dataItem["requiredChampion"] = champion
+        if "specialRecipe" in dataItem.keys():
+            dataItem["specialRecipe"] = int(dataItem['specialRecipe'])
+
+        dataItem['maps'] = [int(mapId) for mapId, v in dataItem['maps'].items() if v]
+        return from_dict(cls, data=dataItem)
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)

@@ -11,10 +11,10 @@ class ProfileIcon:
     id: int
     image: Image
 
-
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "ProfileIcon":
-        #data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
+    def from_dict(cls, data: Dict[str, Any]) -> Union["ProfileIcon", None]:
+        # data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
+
         if isinstance(data['id'], str):
             data['id'] = int(data['id'])
 

@@ -16,8 +16,10 @@ class Champion:
 
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Champion":
-        data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
+    def from_dict(cls, data: Dict[str, Any], traits:List[Trait]) -> "Champion":
+        #data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
+        data['id'] = data['championId']
+        data['traits'] = traits
         return from_dict(cls, data=data)
 
     def to_dict(self) -> Dict[str, Any]:
