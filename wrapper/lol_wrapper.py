@@ -126,9 +126,11 @@ class LolWrapper(BaseWrapper):
         path = self.getPath(f"champion_light.json")
         if self.dc.downloadNewVersion:
 
-            print("updating lol champions ... ", end="")
+            if self.dc.showLog:
+                print("updating lol champions ... ", end="")
             championsJsonLight = withoutDataDict(saveJsonApiResponseInJsonFile(config.url[0].format(self.dc.version), path))
-            print("done")
+            if self.dc.showLog:
+                print("done")
 
         else:
             championsJsonLight = withoutDataDict(getJson("champions_light", self.basePath))
@@ -166,7 +168,8 @@ class LolWrapper(BaseWrapper):
         combinedPath = self.getPath("items_combined.json")
 
         if self.dc.downloadNewVersion:
-            print("updating crawled items ... ")
+            if self.dc.showLog:
+                print("updating crawled items ... ")
             self.crawlItems(crawlPath)
             with open(crawlPath, "r") as f:
                 self.itemsCrawlJson = json.load(f)

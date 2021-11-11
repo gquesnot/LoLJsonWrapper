@@ -6,7 +6,10 @@ from wrapper.lol_data_controller import LolDataController
 
 if __name__ == '__main__':
     # init function with his default parameter
-    dc = LolDataController(update=True, forceUpdate=False)
+    # update: update if needed
+    # forceUpdate: update evryTime
+    # showLog : show print init / load
+    dc = LolDataController(update=True, forceUpdate=False, showLog=False)
 
     # change jsonDownloadUrl in tftWrapper if new update and run the command below
     # dc.tft.downloadJson()

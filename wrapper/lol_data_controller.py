@@ -33,7 +33,8 @@ class LolDataController():
 
     version = None
 
-    def __init__(self, update=True, forceUpdate=False):
+    def __init__(self, update=True, forceUpdate=False, showLog=False):
+        self.showLog = showLog
         self.update = update
         self.forceUpdate = forceUpdate
         self.tft = TftWrapper(self)
@@ -55,16 +56,18 @@ class LolDataController():
         if self.version is None:
             self.version = versions[0]
         if self.forceUpdate:
-            print("/!\\ FORCE UPDATE /!\\")
+            if self.showLog:
+                print("/!\\ FORCE UPDATE /!\\")
             self.downloadNewVersion = True
         if versions[0] != self.version:
-
-            print('New Version Available')
+            if self.showLog:
+                print('New Version Available')
             if self.update:
                 self.downloadNewVersion = True
 
             elif not self.update and not self.forceUpdate:
-                print("/!\\ UPDATE FALSE /!\\")
+                if self.showLog:
+                    print("/!\\ UPDATE FALSE /!\\")
                 self.downloadNewVersion = False
         if self.downloadNewVersion:
             with open(self.basePathVersions, "w+") as f:

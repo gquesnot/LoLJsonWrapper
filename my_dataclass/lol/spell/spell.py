@@ -51,7 +51,7 @@ class Spell:
                             enumerate(data['leveltip']["label"])]
             data = mapDataClassFields(data, toMap)
         else:
-            print("ERROR NO leveltip", data['name'])
+            print("ERROR NO leveltip for the spell", data['name'])
 
         return from_dict(cls, data=data)
 

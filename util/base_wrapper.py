@@ -27,26 +27,31 @@ class BaseWrapper:
         if configsList is not None:
             hasError = len([1 for config in configsList if config not in self.allConfig]) != 0
             if hasError:
-                print("HAS ERROR IN CONFIG")
+                if self.dc.showLog:
+                    print("HAS ERROR IN CONFIG")
                 return
         else:
             configsList = self.allConfig
-        print(f"init {self.hint} datas ...", end="")
+        if self.dc.showLog:
+            print(f"init {self.hint} datas ...", end="")
         # init function
         self.initConfigs()
-        print(f" done")
+        if self.dc.showLog:
+            print(f" done")
         for idx, config in enumerate(self.configs):
             configName = config.name
             if configName in configsList:
                 configC = ownCapitalize(configName)
-                print(f"loading {self.hint} {configName} ... ", end="")
+                if self.dc.showLog:
+                    print(f"loading {self.hint} {configName} ... ", end="")
                 try:
                     self.configs[idx] = getattr(self, f"load{configC}")()
                 except:
                     self.configs[idx] = self.loadConfig(config)
                 config = self.configs[idx]
                 setattr(self, config.name, config.datas)
-                print(f"done")
+                if self.dc.showLog:
+                    print(f"done")
         if clean:
             self.cleanJson()
 
@@ -66,10 +71,12 @@ class BaseWrapper:
         path = os.path.join(self.basePath, f"{config.path}.json")
 
         if self.dc.downloadNewVersion:
-            print(f"updating {config.name} ... ", end="")
+            if self.dc.showLog:
+                print(f"updating {config.name} ... ", end="")
             url = config.url.format(self.dc.version) if "version" in config.urlHint.split(" ") else config.url
             jsonData = saveJsonApiResponseInJsonFile(url, path)
-            print("done")
+            if self.dc.showLog:
+                print("done")
         else:
             with open(path, "r") as f:
                 jsonData = json.load(f)

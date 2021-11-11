@@ -1,5 +1,5 @@
-## LoL Json Wrapper in Python to give you Interface for LoL JSON Datas 
-#### The goal of this project is to remove the complexity and boring stuff in using raw LOL / TFT json data.  
+## LoL Json Wrapper for Python
+#### The goal of this project is to remove the complexity and boring stuff of using raw LOL / TFT json data.  
 
 - auto update Dragon Data on lol and tft on demand
 - auto scrap missing items lol info
@@ -22,6 +22,7 @@ pip install -r requirements.txt
 
 ### TODO
 - API dataclasses Interface to reformat json data from api in better way
+- save pickle for fast load ? 
 
 
 

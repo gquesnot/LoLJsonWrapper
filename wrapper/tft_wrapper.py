@@ -52,7 +52,8 @@ class TftWrapper(BaseWrapper):
         return config
 
     def downloadJson(self):
-        print("downloading json tft ... ", end="")
+        if self.dc.showLog:
+            print("downloading json tft ... ", end="")
         filehandle, _ = urlretrieve(self.jsonDownloadUrl)
         zip_file_object = zipfile.ZipFile(filehandle, 'r')
         for file in zip_file_object.namelist():
@@ -62,4 +63,5 @@ class TftWrapper(BaseWrapper):
                 config = self.getConfigByName(configName)
                 with open(self.getPath(f"{config.path}.json"), "w+") as f:
                     f.write(jsonData)
-        print("done")
+        if self.dc.showLog:
+            print("done")
