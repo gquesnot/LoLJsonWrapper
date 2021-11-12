@@ -13,7 +13,7 @@ class Info:
     difficulty: int
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Info":
+    def from_dict(cls, dc, data: Dict[str, Any]) -> "Info":
         #data = {k if k in keyword.kwlist else k + "_": v for k, v in data.items()}
         return from_dict(cls, data=data)
 

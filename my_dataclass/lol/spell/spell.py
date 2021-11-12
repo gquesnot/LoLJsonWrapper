@@ -9,6 +9,7 @@ from my_dataclass.lol.spell.spell_tip import SpellTip
 from util.dataclass_function import mapDataClassFields
 
 
+
 @dataclass
 class Spell:
     id: str
@@ -28,7 +29,7 @@ class Spell:
     resource: Union[str, None] = field(default=None)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Spell":
+    def from_dict(cls, dc, data: Dict[str, Any]) -> "Spell":
         # data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
         toMap = {
             "leveltip": {
@@ -49,7 +50,7 @@ class Spell:
 
             data['leveltip'] = [{"label": label, "effect": data['leveltip']["effect"][idx]} for idx, label in
                             enumerate(data['leveltip']["label"])]
-            data = mapDataClassFields(data, toMap)
+            data = mapDataClassFields(dc, data, toMap)
         else:
             print("ERROR NO leveltip for the spell", data['name'])
 

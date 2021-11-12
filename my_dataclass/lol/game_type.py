@@ -11,7 +11,7 @@ class GameType:
     description: str
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "GameType":
+    def from_dict(cls,dc, data: Dict[str, Any]) -> "GameType":
         #data = {k if k in keyword.kwlist else k + "_": v for k, v in data.items()}
         data['name'] = data['gametype']
         return from_dict(cls, data=data)

@@ -13,7 +13,7 @@ class Skin:
     chromas: bool
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Skin":
+    def from_dict(cls, dc, data: Dict[str, Any]) -> "Skin":
         data['id'] = int(data['id'])
         return from_dict(cls, data=data)
 

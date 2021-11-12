@@ -1,5 +1,5 @@
 
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass, asdict, field
 from typing import Any, Union, List, Dict
 
 from dacite import from_dict
@@ -24,9 +24,10 @@ class SummonerSpell:
     maxammo: int
     image: Image
     ressource: Union[None, str]
+    casts:  int = field(default=0)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> Union["SummonerSpell", None]:
+    def from_dict(cls,dc, data: Dict[str, Any]) -> Union["SummonerSpell", None]:
         #data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
         if "key" not in data:
             return None

@@ -6,10 +6,10 @@ from my_dataclass.tft.champion.champion import Champion
 from my_dataclass.tft.item.item import Item
 from my_dataclass.tft.trait.trait import Trait
 from my_dataenum.config_index import ConfigIndex
-from util.base_wrapper import BaseWrapper
+from util.base_json_wrapper import BaseJsonWrapper
 
 
-class TftWrapper(BaseWrapper):
+class TftJsonWrapper(BaseJsonWrapper):
     hint = "tft"
 
     configsDict = [
@@ -34,9 +34,9 @@ class TftWrapper(BaseWrapper):
 
     jsonDownloadUrl = "https://static.developer.riotgames.com/docs/tft/set5patch1115.zip"
 
-    champions: Dict[str, Champion]
-    items: Dict[str, Item]
-    traits: Dict[str, Trait]
+    champions: Dict[str, Champion] = dict()
+    items: Dict[str, Item] = dict()
+    traits: Dict[str, Trait] = dict()
 
     def __init__(self, dc):
         super().__init__(dc)
@@ -46,8 +46,8 @@ class TftWrapper(BaseWrapper):
         config = self.getConfigByName("champions")
         traits = self.getDatas("traits")
         for champ in config.json:
-            myTraits = [traits[trait] for trait in champ['traits']]
-            champion = config.class_.from_dict(champ, myTraits)
+
+            champion = config.class_.from_dict(self.dc, champ)
             config.addData(champion.name, champion)
         return config
 

@@ -9,12 +9,12 @@ from my_dataclass.lol.champion.champion import Champion
 
 @dataclass
 class Ban:
-    champion: Champion#championId -> Champion
+    champion: Champion  # championId -> Champion
     pickTurn: int = field(default=None)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Ban":
-        data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
+    def from_dict(cls, dc, data: Dict[str, Any], ) -> "Ban":
+        data['champion'] = dc.lol.getChampById(data['championId']).to_dict()
         return from_dict(cls, data=data)
 
     def to_dict(self) -> Dict[str, Any]:

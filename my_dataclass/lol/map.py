@@ -12,7 +12,7 @@ class Map:
 
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Map":
+    def from_dict(cls, dc,data: Dict[str, Any]) -> "Map":
         #data = {k if k in keyword.kwlist else k + "_": v for k, v in data.items()}
         data['id'] = data['mapId']
         data['name'] = data['mapName']

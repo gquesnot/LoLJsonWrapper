@@ -14,6 +14,7 @@ class Team:
     objectives: Objectives
     teamId: int = field(default=0)
     win: bool = field(default=False)
+    earlySurrendered: bool = field(default=False)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Team":

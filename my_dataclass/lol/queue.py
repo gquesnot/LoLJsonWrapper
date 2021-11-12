@@ -15,8 +15,12 @@ class Queue:
     notes: Union[None, str]
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any], myMap: Map) -> "Queue":
+    def from_dict(cls,dc, data: Dict[str, Any]) -> "Queue":
         data['id'] = data['queueId']
+        myMap = None
+        for mapId, map_ in dc.lol.maps.items():
+            if map_.name == data['map']:
+                myMap = map_
         if myMap is not None:
             data['map'] = myMap.to_dict()
         #data = {k if k in keyword.kwlist else k + "_": v for k, v in data.items()}

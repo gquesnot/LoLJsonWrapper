@@ -1,37 +1,41 @@
 import keyword
 from dataclasses import dataclass, field, asdict
-from typing import Any, Dict
+from typing import Any, Dict, Union
 
 from dacite import from_dict
 
 from my_dataclass.lol.champion.champion import Champion
+from my_dataclass.lol.item.item import Item
 from my_dataclass.lol.item.item_combined import ItemCombined
 from my_dataclass.lol.summoner_spell import SummonerSpell
 from my_dataclass.lolapi.match.perk.perk import Perk
+from my_dataclass.lolapi.match.role_lane import RoleLane
+from my_dataclass.lolapi.match.team import Team
+from my_dataclass.lolapi.match.team_info import TeamInfo
+from my_dataclass.lolapi.summoner.profile_icon import ProfileIcon
 from my_dataclass.lolapi.summoner.summoner import Summoner
+from util.dataclass_function import mapDataClassFields
 
 
 @dataclass
 class MatchParticipant:
-    perks: Perk
-    champion: Champion#champion id -> Champion
-    lane: Lane  # individualPosition +lane + role  + teamPosition  = lane -> Position / role
-    profileIcon: Icon # icon Id -> Icon
-    summoner: Summoner# summonerId summonerName -> Summoner
-    summonerSpell1: SummonerSpell# summoner1Id summonerId1 cast ->
-    summonerSpell2: SummonerSpell# summonerSpell2
-    item0: ItemCombined # itemId -> Item
-    item1: ItemCombined
-    item2: ItemCombined
-    item3: ItemCombined
-    item4: ItemCombined
-    item5: ItemCombined
-    item6: ItemCombined
+    perk: Perk
+    champion: Champion  # champion id -> Champion
+    lane: RoleLane  # individualPosition +lane + role  + teamPosition  = lane -> Position / role
+    summoner: Summoner  # summonerId summonerName -> Summoner
+    summonerSpell1: SummonerSpell  # summoner1Id summonerId1 cast ->
+    summonerSpell2: SummonerSpell  # summonerSpell2
+    item0: Union[Item, ItemCombined, None]  # itemId -> Item
+    item1: Union[Item, ItemCombined, None]
+    item2: Union[Item, ItemCombined, None]
+    item3: Union[Item, ItemCombined, None]
+    item4: Union[Item, ItemCombined, None]
+    item5: Union[Item, ItemCombined, None]
+    item6: Union[Item, ItemCombined, None]
+    team: TeamInfo
     assists: int = field(default=0)
     baronKills: int = field(default=0)
     bountyLevel: int = field(default=0)
-    champExperience: int = field(default=0)
-    champLevel: int = field(default=0)
 
     championTransform: int = field(default=0)
     consumablesPurchased: int = field(default=0)
@@ -47,8 +51,6 @@ class MatchParticipant:
     firstBloodKill: float = field(default=False)
     firstTowerAssist: float = field(default=False)
     firstTowerKill: float = field(default=False)
-    gameEndedInEarlySurrender: float = field(default=False)
-    gameEndedInSurrender: float = field(default=False)
     goldEarned: int = field(default=0)
     goldSpent: int = field(default=0)
 
@@ -72,13 +74,11 @@ class MatchParticipant:
     nexusTakedowns: bool = field(default=False)
     objectivesStolen: int = field(default=0)
     objectivesStolenAssists: int = field(default=0)
-    id: int = field(default=None)
+    id: int = field(default=-1)
     pentaKills: int = field(default=0)
     physicalDamageDealt: int = field(default=0)
     physicalDamageDealtToChampions: int = field(default=0)
     physicalDamageTaken: int = field(default=0)
-
-    puuid: str = field(default=None)
     quadraKills: int = field(default=0)
     riotIdName: str = field(default="")
     riotIdTagline: str = field(default="")
@@ -87,12 +87,6 @@ class MatchParticipant:
     spell2Casts: int = field(default=0)
     spell3Casts: int = field(default=0)
     spell4Casts: int = field(default=0)
-    summoner1Casts: int = field(default=0)
-
-    summoner2Casts: int = field(default=None)
-
-    teamEarlySurrendered: bool = field(default=False)
-    teamId: int = field(default=None)
     timeCCingOthers: int = field(default=0)
     timePlayed: int = field(default=0)
     totalDamageDealt: int = field(default=0)
@@ -117,11 +111,48 @@ class MatchParticipant:
     visionWardsBoughtInGame: int = field(default=0)
     wardsKilled: int = field(default=0)
     wardsPlaced: int = field(default=0)
-    win: bool = field(default=False)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "MatchParticipant":
-        data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
+    def from_dict(cls, dc, data: Dict[str, Any], idx: int, team) -> "MatchParticipant":
+
+        data['id'] = idx
+        data['team'] = team.to_dict()
+
+        data["summoner"] = {
+            "puuid": data['puuid'],
+            "id": data['summonerId'],
+            "summonerLevel": data['summonerLevel'],
+            "summonerName": data['summonerName'],
+            "profileIconId":  dc.lol.profileIcons[str(data['profileIcon'])].to_dict()
+        }
+        champion = dc.lol.champions[data['championName']]
+        champion.lvl = data['bountyLevel']
+        champion.experience = data['champExperience']
+        data['champion'] = champion.to_dict()
+        data['lane'] = {
+            "individualPosition": data['individualPosition'],
+            "lane": data['lane'],
+            "teamPosition": data['teamPosition'],
+            "role": data['role'],
+        }
+        s1: SummonerSpell = dc.lol.getSummonerSpellById(data['summoner1Id'])
+        s2: SummonerSpell = dc.lol.getSummonerSpellById(data['summoner2Id'])
+        s1.casts = data['summoner1Casts']
+        s2.casts = data['summoner2Casts']
+        data['summonerSpell1'] = s1.to_dict()
+        data['summonerSpell2'] = s2.to_dict()
+        data['perk'] = Perk.from_dict(dc, data["perks"]).to_dict()
+        data["item0"] = dc.lol.items[str(data['item0'])].to_dict() if data['item0'] != 0 else None
+        data["item1"] = dc.lol.items[str(data['item1'])].to_dict() if data['item1'] != 0 else None
+        data["item2"] = dc.lol.items[str(data['item2'])].to_dict() if data['item2'] != 0 else None
+        data["item3"] = dc.lol.items[str(data['item3'])].to_dict() if data['item3'] != 0 else None
+        data["item4"] = dc.lol.items[str(data['item4'])].to_dict() if data['item4'] != 0 else None
+        data["item5"] = dc.lol.items[str(data['item5'])].to_dict() if data['item5'] != 0 else None
+        data["item6"] = dc.lol.items[str(data['item6'])].to_dict() if data['item6'] != 0 else None
+
+        data['nexusLost'] = data['nexusLost'] == 1
+        data['nexusTakedowns'] = data['nexusTakedowns'] == 1
+
         return from_dict(cls, data=data)
 
     def to_dict(self) -> Dict[str, Any]:

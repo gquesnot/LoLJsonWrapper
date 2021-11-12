@@ -3,8 +3,10 @@ import os
 
 import requests
 
-from wrapper.lol_wrapper import LolWrapper
-from wrapper.tft_wrapper import TftWrapper
+from util.dataclass_function import ownCapitalize
+from wrapper.lol_api_wrapper import LolApiWrapper
+from wrapper.lol_json_wrapper import LolJsonWrapper
+from wrapper.tft_json_wrapper import TftJsonWrapper
 
 
 class LolDataController():
@@ -12,17 +14,21 @@ class LolDataController():
     downloadNewVersion = False
     basePath: str = "json_data"
     basePathVersions: str
-    lol: LolWrapper = None
-    tft: TftWrapper = None
+    lol: LolJsonWrapper = None
+    tft: TftJsonWrapper = None
+    lolApi: LolApiWrapper = None
 
     version = None
 
     def __init__(self, update=True, forceUpdate=False, showLog=False):
         self.showLog = showLog
         self.update = update
+        self.ownCapitalize = ownCapitalize
         self.forceUpdate = forceUpdate
-        self.tft = TftWrapper(self)
-        self.lol = LolWrapper(self)
+        self.tft = TftJsonWrapper(self)
+        self.lol = LolJsonWrapper(self)
+
+        self.lolApi = LolApiWrapper(self)
         self.basePathVersions = os.path.join(self.basePath, "versions.json")
         self.checkVersion()
         # self.loadChampions()

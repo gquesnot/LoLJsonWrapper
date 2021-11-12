@@ -1,7 +1,8 @@
 import json
 import os
-from typing import Dict
+from typing import Dict, Union
 
+from attr import field
 from dacite import from_dict
 from scrapy.crawler import CrawlerProcess
 
@@ -15,14 +16,16 @@ from my_dataclass.lol.queue import Queue
 from my_dataclass.lol.season import Season
 from my_dataclass.lol.summoner_spell import SummonerSpell
 from my_dataclass.lolapi.summoner.profile_icon import ProfileIcon
+from my_dataclass.lolapi.summoner.rune_path import RunePath
+from my_dataclass.lolapi.summoner.rune import Rune
 from my_dataenum.config_index import ConfigIndex
 from scraper.lolDatas.spiders.lolfandom import LolfandomSpider
-from util.base_wrapper import BaseWrapper
+from util.base_json_wrapper import BaseJsonWrapper
 from util.base_wrapper_function import getItemsNameAsUrl, withoutDataDict
 from util.json_function import saveJsonApiResponseInJsonFile, getJson
 
 
-class LolWrapper(BaseWrapper):
+class LolJsonWrapper(BaseJsonWrapper):
     hint = "lol"
 
     configsDict = [
@@ -71,6 +74,7 @@ class LolWrapper(BaseWrapper):
         {
             "name": "queues",
             "class_": Queue,
+            "configIndex": ConfigIndex.ID,
             "url": "https://static.developer.riotgames.com/docs/lol/queues.json",
         },
         {
@@ -90,41 +94,51 @@ class LolWrapper(BaseWrapper):
             "path": "items_combined",
             "class_": ItemCombined,
         },
+        {
+            "name": "runes",
+            "path": "runes_reforged",
+            "url": "http://ddragon.leagueoflegends.com/cdn/{}/data/en_US/runesReforged.json",
+            "class_": RunePath,
+            "urlHint": "version"
+        }
     ]
 
     itemsCrawlJson = {}
-    profileIcons: Dict[str, ProfileIcon]
-    summonerSpells: Dict[str, SummonerSpell]
-    seasons: Dict[str, Season]
-    gameModes: Dict[str, GameMode]
-    gameTypes: Dict[str, GameType]
-    maps: Dict[str, Map]
-    queues: Dict[str, Queue]
-    champions: Dict[str, Champion]
-    items: Dict[str, Item]
-    itemsCombined: Dict[str, ItemCombined]
+    profileIcons: Dict[str, ProfileIcon] = dict()
+    summonerSpells: Dict[str, SummonerSpell] = dict()
+    seasons: Dict[str, Season] = dict()
+    gameModes: Dict[str, GameMode] = dict()
+    gameTypes: Dict[str, GameType] = dict()
+    maps: Dict[str, Map] = dict()
+    queues: Dict[str, Queue] = dict()
+    champions: Dict[str, Champion] = dict()
+    items: Dict[str, Item] = dict()
+    itemsCombined: Dict[str, ItemCombined] = dict()
+    runesPath: Dict[str, RunePath] = dict()
+    runes: Dict[str, Union[Rune, RunePath]] = dict()
 
     def __init__(self, dc):
         super().__init__(dc)
 
-    def loadQueues(self):
+    def loadRunes(self):
+        config = self.getConfigByName("runes")
 
-        configQueues = self.getConfigByName("queues")
-        maps = self.getConfigByName("maps").datas
-        myMap = None
-        for queue_ in configQueues.json:
-            for mapId, map_ in maps.items():
-                if map_.name == queue_['map']:
-                    myMap = map_
-            sQueue = Queue.from_dict(queue_, myMap)
-            configQueues.addData(str(sQueue.id), sQueue)
+        for path in config.json:
+            runesSlots = []
+            for slot in path['slots']:
+                newRunes = []
+                for rune in slot['runes']:
+                    myRune = Rune.from_dict(rune)
+                    newRunes.append(myRune.to_dict())
+                    self.runes[str(myRune.id)] = myRune
+                runesSlots.append(newRunes)
+            myRunePath = RunePath.from_dict(path, runesSlots)
+            self.runesPath[str(myRunePath.id)] = myRunePath
 
-        myMap = map
-        return configQueues
 
     def initChampions(self):
         config = self.getConfigByName("champions")
-        path = self.getPath(f"champion_light.json")
+        path = self.getPath(f"champions_light.json")
         if self.dc.downloadNewVersion:
 
             if self.dc.showLog:
@@ -156,14 +170,27 @@ class LolWrapper(BaseWrapper):
         config = self.getConfigByName("champions")
         for champName, champFull, champLight in zip(config.json[1].keys(), config.json[1].values(),
                                                     config.json[0].values()):
-            config.addData(champName, Champion.from_dict(champFull, champLight))
+            config.addData(champName, Champion.from_dict(self.dc, champFull, champLight))
         return config
 
     def loadItems(self):
         config = self.getConfigByName("items")
         for id_, itemJ in config.json.items():
-            config.addData(id_, config.class_.from_dict(id_, itemJ))
+            config.addData(id_, Item.from_dict(id_, itemJ))
         return config
+
+
+    def getChampById(self, id_):
+        for champName , champ in self.champions.items():
+            if champ.id == id_:
+                return champ
+        return None
+
+    def getSummonerSpellById(self, id_):
+        for summonerSpellName , summonerSpell in self.summonerSpells.items():
+            if summonerSpell.id == id_:
+                return summonerSpell
+        return None
 
     def initItemsCombined(self):
 

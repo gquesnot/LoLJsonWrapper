@@ -10,6 +10,7 @@ from my_dataclass.lol.champion.skin import Skin
 from my_dataclass.lol.spell.spell import Spell
 from util.dataclass_function import mapDataClassFields
 
+
 itemStatList = {
     "hp": "hp",
     "hpregen": "hpregen",
@@ -45,9 +46,10 @@ class Champion:
     skins: List[Skin]
     spells: List[Spell]
     lvl: int = field(default=0)
+    experience: int = field(default=0)
 
     @classmethod
-    def from_dict(cls, dataFull: Dict[str, Any], dataLight: Dict[str, Any]) -> "Champion":
+    def from_dict(cls, dc,dataFull: Dict[str, Any], dataLight: Dict[str, Any]) -> "Champion":
         champName = dataLight['name']
         dataFull = list(dataFull.values())[0]
         data = dataFull
@@ -75,7 +77,7 @@ class Champion:
             }
         }
         data['id'] = int(dataLight['key'])
-        data= mapDataClassFields(data, toMap)
+        data= mapDataClassFields(dc, data, toMap)
 
         #data = {k if k in keyword.kwlist else k + "_": v for k, v in data.items()}
         return from_dict(cls, data=data)

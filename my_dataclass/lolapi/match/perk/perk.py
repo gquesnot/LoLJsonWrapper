@@ -5,17 +5,19 @@ from typing import Any, List, Dict
 from dacite import from_dict
 
 from my_dataclass.lolapi.match.perk.stats import Stats
-from my_dataclass.lolapi.match.perk.style import Style
+from my_dataclass.lolapi.match.perk.participant_runes import  ParticipantRunes
 
 
 @dataclass
 class Perk:
     stats : Stats# statPerks->defenseId = Stat Value
-    styles : List[Style]
+    runes : ParticipantRunes
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Perk":
-        data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
+    def from_dict(cls, dc, data: Dict[str, Any]) -> "Perk":
+        data['stats']= Stats.from_dict(dc, data['statPerks']).to_dict()
+        resRunes = dict()
+        data["runes"] = ParticipantRunes.from_dict(dc, data['styles']).to_dict()
         return from_dict(cls, data=data)
 
     def to_dict(self) -> Dict[str, Any]:

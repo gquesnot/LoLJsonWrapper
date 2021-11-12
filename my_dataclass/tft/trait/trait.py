@@ -18,7 +18,7 @@ class Trait:
 
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Trait":
+    def from_dict(cls, dc,data: Dict[str, Any]) -> "Trait":
         #data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
         data['id'] = data['key']
         data["type"] = TraitType(data['type'])
