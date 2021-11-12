@@ -1,18 +1,25 @@
 import keyword
 from dataclasses import dataclass, field, asdict
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from dacite import from_dict
 
+from my_dataclass.lolapi.match_timeline.frame_participant import FrameParticipant
+from my_dataclass.lolapi.summoner.summoner import Summoner
+
 
 @dataclass
-class MatchTimeLineParticipant:
-    id: int = field(default=None)
-    puuid: str = field(default=None)
+class MatchTimelineParticipant:
+    frames: List[FrameParticipant]
+    id: int
+    summoner: Summoner
+
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "MatchTimeLineParticipant":
-        data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
+    def from_dict(cls, dc, data: Dict[str, Any]) -> "MatchTimelineParticipant":
+        data['id'] = data['participantId']
+        data['summoner'] = Summoner.from_dict(dc, {"puuid":data['puuid']})
+        data['frames'] = [FrameParticipant.from_dict(dc, frame)for frame in data['frames']]
         return from_dict(cls, data=data)
 
     def to_dict(self) -> Dict[str, Any]:
