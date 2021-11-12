@@ -10,15 +10,15 @@ from my_dataclass.lol.map import Map
 class Queue:
 
     id: int
-    map: Union[Map, str]
+    map: Union[str,Map]
     description : Union[None, str]
     notes: Union[None, str]
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any], myMap: Map) -> "Queue":
         data['id'] = data['queueId']
-
-        data['map'] = myMap.to_dict() if myMap is not None else data['map']
+        if myMap is not None:
+            data['map'] = myMap.to_dict()
         #data = {k if k in keyword.kwlist else k + "_": v for k, v in data.items()}
         return from_dict(cls, data=data)
 

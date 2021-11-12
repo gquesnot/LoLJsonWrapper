@@ -104,8 +104,6 @@ class LolWrapper(BaseWrapper):
     items: Dict[str, Item]
     itemsCombined: Dict[str, ItemCombined]
 
-
-
     def __init__(self, dc):
         super().__init__(dc)
 
@@ -113,11 +111,15 @@ class LolWrapper(BaseWrapper):
 
         configQueues = self.getConfigByName("queues")
         maps = self.getConfigByName("maps").datas
+        myMap = None
         for queue_ in configQueues.json:
-            myMap = maps[queue_['map']] if queue_['map'] in maps else None
+            for mapId, map_ in maps.items():
+                if map_.name == queue_['map']:
+                    myMap = map_
             sQueue = Queue.from_dict(queue_, myMap)
             configQueues.addData(str(sQueue.id), sQueue)
 
+        myMap = map
         return configQueues
 
     def initChampions(self):
@@ -127,9 +129,11 @@ class LolWrapper(BaseWrapper):
 
             if self.dc.showLog:
                 print("updating lol champions ... ", end="")
-            championsJsonLight = withoutDataDict(saveJsonApiResponseInJsonFile(config.url[0].format(self.dc.version), path))
+            championsJsonLight = withoutDataDict(
+                saveJsonApiResponseInJsonFile(config.url[0].format(self.dc.version), path))
             if self.dc.showLog:
                 print("done")
+
 
         else:
             championsJsonLight = withoutDataDict(getJson("champions_light", self.basePath))
@@ -150,14 +154,15 @@ class LolWrapper(BaseWrapper):
 
     def loadChampions(self):
         config = self.getConfigByName("champions")
-        for champName, champFull, champLight in zip(config.json[1].keys(), config.json[1].values(), config.json[0].values()):
+        for champName, champFull, champLight in zip(config.json[1].keys(), config.json[1].values(),
+                                                    config.json[0].values()):
             config.addData(champName, Champion.from_dict(champFull, champLight))
         return config
 
     def loadItems(self):
         config = self.getConfigByName("items")
         for id_, itemJ in config.json.items():
-            config.addData(id_,  config.class_.from_dict(id_, itemJ))
+            config.addData(id_, config.class_.from_dict(id_, itemJ))
         return config
 
     def initItemsCombined(self):
@@ -185,7 +190,7 @@ class LolWrapper(BaseWrapper):
             config.datas = self.combineItems()
         else:
             for k, v in config.json.items():
-                config.addData(k,from_dict(ItemCombined, v))
+                config.addData(k, from_dict(ItemCombined, v))
         return config
 
     def combineItems(self):
@@ -197,7 +202,8 @@ class LolWrapper(BaseWrapper):
         for itemId, item in configItems.json.items():
             for item_crawl in self.itemsCrawlJson:
                 if item['name'] == item_crawl['name']:
-                    configItemsCombined.addData(itemId, ItemCombined.from_dict(itemId,  item_crawl, configChampions.datas,item))
+                    configItemsCombined.addData(itemId,
+                                                ItemCombined.from_dict(itemId, item_crawl, configChampions.datas, item))
         with open(path, "w+") as f:
             json.dump({k: v.to_dict() for k, v in resItems.items()}, f)
         return resItems
@@ -217,5 +223,3 @@ class LolWrapper(BaseWrapper):
         process.crawl(LolfandomSpider, itemsName=getItemsNameAsUrl(self.getConfigByName("items").json))
         process.start()
         process.join()
-
-

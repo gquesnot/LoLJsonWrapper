@@ -69,6 +69,6 @@ if __name__ == '__main__':
     # for mapId, map_ in dc.lol.maps.items():
     #     print(mapId, map_)
 
-    # Queues
-    # for queueId, queue in dc.lol.queues.items():
-    #     print(queueId, queue)
+    #Queues
+    for queueId, queue in dc.lol.queues.items():
+        print(queueId, queue)
