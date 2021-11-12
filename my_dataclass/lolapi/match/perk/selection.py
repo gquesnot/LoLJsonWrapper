@@ -1,4 +1,3 @@
-import keyword
 from dataclasses import dataclass, field, asdict
 from typing import Any, Dict
 
@@ -16,7 +15,7 @@ class Selection:
 
     @classmethod
     def from_dict(cls, dc, data: Dict[str, Any]) -> "Selection":
-        print(data)
+        # print(data)
         data['rune'] = dc.lol.runes[str(data['perk'])].to_dict()
 
         return from_dict(cls, data=data)

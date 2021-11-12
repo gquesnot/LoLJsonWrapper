@@ -1,11 +1,5 @@
-from my_dataenum.config_index import ConfigIndex
-
-
 def valToStr(val):
     return val if isinstance(val, str) else str(val)
-
-
-
 
 
 def getItemsNameAsUrl(myDic):

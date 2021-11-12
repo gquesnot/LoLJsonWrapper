@@ -1,10 +1,7 @@
-import keyword
 from dataclasses import dataclass, asdict
 from typing import Any, Dict
 
 from dacite import from_dict
-
-from my_dataclass.lolapi.match.objective import Objective
 
 
 @dataclass
@@ -13,7 +10,6 @@ class RoleLane:
     lane: str
     teamPosition: str
     individualPosition: str
-
 
     @classmethod
     def from_dict(cls, dc, data: Dict[str, Any]) -> "RoleLane":

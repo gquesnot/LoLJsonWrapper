@@ -6,14 +6,13 @@ from dacite import from_dict
 
 @dataclass
 class GameMode:
-
-    name :str
+    name: str
     description: str
 
     @classmethod
-    def from_dict(cls, dc,data: Dict[str, Any]) -> "GameMode":
+    def from_dict(cls, dc, data: Dict[str, Any]) -> "GameMode":
         data['name'] = data['gameMode']
-        #data = {k if k in keyword.kwlist else k + "_": v for k, v in data.items()}
+        # data = {k if k in keyword.kwlist else k + "_": v for k, v in data.items()}
         return from_dict(cls, data=data)
 
     def to_dict(self) -> Dict[str, Any]:

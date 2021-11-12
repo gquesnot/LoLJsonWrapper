@@ -25,7 +25,7 @@ class ItemCombined:
     specialRecipe: Union[int, None] = field(default=None)
     stacks: int = field(default=0)
     depth: int = field(default=0)
-    from_:Union[None,List[str]] = field(default=None)
+    from_: Union[None, List[str]] = field(default=None)
     into: Union[None, List[str]] = field(default=None)
     consumed: bool = field(default=False)
     consumeOnFull: bool = field(default=False)
@@ -34,9 +34,9 @@ class ItemCombined:
     inStore: bool = field(default=True)
     hideFromAll: bool = field(default=False)
 
-
     @classmethod
-    def from_dict(cls, itemId: int,champions:Dict[str, Champion], crawlItem: Dict[str, Any],dataItem: Dict[str, Any]) -> "ItemCombined":
+    def from_dict(cls, itemId: int, champions: Dict[str, Champion], crawlItem: Dict[str, Any],
+                  dataItem: Dict[str, Any]) -> "ItemCombined":
         dataItem['id'] = int(itemId)
         dataItem['stats'] = {k: v for k, v in crawlItem.items() if k != "name"}
         for k, v in dataItem['stats'].items():

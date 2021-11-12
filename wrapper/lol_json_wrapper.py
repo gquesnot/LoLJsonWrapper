@@ -2,7 +2,6 @@ import json
 import os
 from typing import Dict, Union
 
-from attr import field
 from dacite import from_dict
 from scrapy.crawler import CrawlerProcess
 
@@ -16,8 +15,8 @@ from my_dataclass.lol.queue import Queue
 from my_dataclass.lol.season import Season
 from my_dataclass.lol.summoner_spell import SummonerSpell
 from my_dataclass.lolapi.summoner.profile_icon import ProfileIcon
-from my_dataclass.lolapi.summoner.rune_path import RunePath
 from my_dataclass.lolapi.summoner.rune import Rune
+from my_dataclass.lolapi.summoner.rune_path import RunePath
 from my_dataenum.config_index import ConfigIndex
 from scraper.lolDatas.spiders.lolfandom import LolfandomSpider
 from util.base_json_wrapper import BaseJsonWrapper
@@ -135,7 +134,6 @@ class LolJsonWrapper(BaseJsonWrapper):
             myRunePath = RunePath.from_dict(path, runesSlots)
             self.runesPath[str(myRunePath.id)] = myRunePath
 
-
     def initChampions(self):
         config = self.getConfigByName("champions")
         path = self.getPath(f"champions_light.json")
@@ -147,8 +145,6 @@ class LolJsonWrapper(BaseJsonWrapper):
                 saveJsonApiResponseInJsonFile(config.url[0].format(self.dc.version), path))
             if self.dc.showLog:
                 print("done")
-
-
         else:
             championsJsonLight = withoutDataDict(getJson("champions_light", self.basePath))
 
@@ -179,15 +175,14 @@ class LolJsonWrapper(BaseJsonWrapper):
             config.addData(id_, Item.from_dict(id_, itemJ))
         return config
 
-
     def getChampById(self, id_):
-        for champName , champ in self.champions.items():
+        for champName, champ in self.champions.items():
             if champ.id == id_:
                 return champ
         return None
 
     def getSummonerSpellById(self, id_):
-        for summonerSpellName , summonerSpell in self.summonerSpells.items():
+        for summonerSpellName, summonerSpell in self.summonerSpells.items():
             if summonerSpell.id == id_:
                 return summonerSpell
         return None
@@ -201,7 +196,7 @@ class LolJsonWrapper(BaseJsonWrapper):
         if self.dc.downloadNewVersion:
             if self.dc.showLog:
                 print("updating crawled items ... ")
-            self.crawlItems(crawlPath)
+            # self.crawlItems(crawlPath)
             with open(crawlPath, "r") as f:
                 self.itemsCrawlJson = json.load(f)
         else:
@@ -220,6 +215,17 @@ class LolJsonWrapper(BaseJsonWrapper):
                 config.addData(k, from_dict(ItemCombined, v))
         return config
 
+    def getItemsById(self, id_):
+
+        id_ = str(id_) if isinstance(id_, int) else id_
+        if id_ == 0:
+            return None
+        if id_ in self.itemsCombined.keys():
+            return self.itemsCombined[id_]
+        elif id_ in self.items.keys():
+            return self.items[id_]
+        else:
+            return None
     def combineItems(self):
         resItems = dict()
         configItems = self.getConfigByName("items")
@@ -232,8 +238,8 @@ class LolJsonWrapper(BaseJsonWrapper):
                     configItemsCombined.addData(itemId,
                                                 ItemCombined.from_dict(itemId, item_crawl, configChampions.datas, item))
         with open(path, "w+") as f:
-            json.dump({k: v.to_dict() for k, v in resItems.items()}, f)
-        return resItems
+            json.dump({k: v.to_dict() for k, v in configItemsCombined.datas.items()}, f)
+        return configItemsCombined.datas
 
     def crawlItems(self, crawlPath):
         try:

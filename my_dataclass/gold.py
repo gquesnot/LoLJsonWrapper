@@ -7,7 +7,6 @@ from dacite import from_dict
 
 @dataclass
 class Gold:
-
     base: int
     purchasable: int
     total: int

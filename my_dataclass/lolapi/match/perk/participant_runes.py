@@ -1,18 +1,15 @@
-import keyword
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, asdict
 from typing import Any, List, Dict
 
 from dacite import from_dict
 
-from my_dataclass.lolapi.match.perk.selection import Selection
 from my_dataclass.lolapi.match.perk.style import Style
-from my_dataenum.lol.perk_enum import PerkEnum
 
 
 @dataclass
 class ParticipantRunes:
     primary: Style
-    secondary : Style
+    secondary: Style
 
     @classmethod
     def from_dict(cls, dc, data: List[Any]) -> "ParticipantRunes":

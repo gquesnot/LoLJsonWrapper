@@ -1,12 +1,10 @@
-import os
-from typing import List, Dict, Any, Union
+from typing import List
 
 from my_dataclass.api_wrapper_config import ApiWrapperConfig
 from util.base_wrapper import BaseWrapper
 
 
 class BaseApiWrapper(BaseWrapper):
-
     configs: List[ApiWrapperConfig]
 
     def __init__(self, dc):
@@ -21,7 +19,7 @@ class BaseApiWrapper(BaseWrapper):
             try:
                 return getattr(self, f"get{self.dc.ownCapitalize(config.name)}")(config, data)
             except:
-                return self.baseGet(config,data)
+                return self.baseGet(config, data)
         else:
             print(f"Error Hint: {hint} not fund")
         return None
@@ -29,4 +27,3 @@ class BaseApiWrapper(BaseWrapper):
     def baseGet(self, config, data):
         config.addData(config.class_.from_dict(data))
         return config.datas
-

@@ -7,7 +7,6 @@ from dacite import from_dict
 @dataclass
 class Effect:
 
-
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Effect":
         # data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}

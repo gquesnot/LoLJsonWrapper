@@ -1,4 +1,3 @@
-import keyword
 from dataclasses import dataclass, asdict
 from typing import Any, List, Dict
 
@@ -10,11 +9,11 @@ from my_dataclass.lolapi.summoner.rune_path import RunePath
 
 @dataclass
 class Style:
-    path : RunePath# statPerks->defenseId = Stat Value
+    path: RunePath  # statPerks->defenseId = Stat Value
     selections: List[Selection]
 
     @classmethod
-    def from_dict(cls,dc, data: Dict[str, Any]) -> "Style":
+    def from_dict(cls, dc, data: Dict[str, Any]) -> "Style":
         resSelections = []
         for selection in data['selections']:
             resSelections.append(Selection.from_dict(dc, selection).to_dict())

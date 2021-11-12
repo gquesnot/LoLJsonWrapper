@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import json
 import os.path
-from typing import Dict, Any, List
+from typing import List
 
 from my_dataclass.json_wrapper_config import JsonWrapperConfig
 from util.base_wrapper import BaseWrapper
@@ -62,18 +62,19 @@ class BaseJsonWrapper(BaseWrapper):
 
     def initConfig(self, config):
         path = os.path.join(self.basePath, f"{config.path}.json")
+        if config.url is not None:
+            if self.dc.downloadNewVersion:
+                if self.dc.showLog:
+                    print(f"updating {config.name} ... ", end="")
 
-        if self.dc.downloadNewVersion:
-            if self.dc.showLog:
-                print(f"updating {config.name} ... ", end="")
-            url = config.url.format(self.dc.version) if "version" in config.urlHint.split(" ") else config.url
-            jsonData = saveJsonApiResponseInJsonFile(url, path)
-            if self.dc.showLog:
-                print("done")
-        else:
-            with open(path, "r") as f:
-                jsonData = json.load(f)
-        config.setJson(jsonData)
+                url = config.url.format(self.dc.version) if "version" in config.urlHint.split(" ") else config.url
+                jsonData = saveJsonApiResponseInJsonFile(url, path)
+                if self.dc.showLog:
+                    print("done")
+            else:
+                with open(path, "r") as f:
+                    jsonData = json.load(f)
+            config.setJson(jsonData)
         return config
 
     def loadConfig(self, config):

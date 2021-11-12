@@ -10,7 +10,6 @@ from my_dataclass.lol.champion.skin import Skin
 from my_dataclass.lol.spell.spell import Spell
 from util.dataclass_function import mapDataClassFields
 
-
 itemStatList = {
     "hp": "hp",
     "hpregen": "hpregen",
@@ -49,7 +48,7 @@ class Champion:
     experience: int = field(default=0)
 
     @classmethod
-    def from_dict(cls, dc,dataFull: Dict[str, Any], dataLight: Dict[str, Any]) -> "Champion":
+    def from_dict(cls, dc, dataFull: Dict[str, Any], dataLight: Dict[str, Any]) -> "Champion":
         champName = dataLight['name']
         dataFull = list(dataFull.values())[0]
         data = dataFull
@@ -77,12 +76,10 @@ class Champion:
             }
         }
         data['id'] = int(dataLight['key'])
-        data= mapDataClassFields(dc, data, toMap)
+        data = mapDataClassFields(dc, data, toMap)
 
-        #data = {k if k in keyword.kwlist else k + "_": v for k, v in data.items()}
+        # data = {k if k in keyword.kwlist else k + "_": v for k, v in data.items()}
         return from_dict(cls, data=data)
-
-
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
@@ -90,12 +87,12 @@ class Champion:
     def byLevel(self, lvl):
         self.lvl = lvl
         lvl = lvl - 1
-        self.stats.hp += self.stats.hpperlevel * lvl
-        self.stats.mp += self.stats.mpperlevel * lvl
-        self.stats.armor += self.stats.armorperlevel * lvl
-        self.stats.mr += self.stats.mrperlevel * lvl
-        self.stats.attackspeed = self.stats.attackspeed * (1 + (self.stats.attackspeedperlevel / 100 * lvl))
-        self.stats.ad += self.stats.adperlevel * lvl
+        self.stats.hp += self.stats.hpPerLevel * lvl
+        self.stats.mp += self.stats.mpPerLevel * lvl
+        self.stats.armor += self.stats.armorPerLevel * lvl
+        self.stats.mr += self.stats.mrPerLevel * lvl
+        self.stats.attackspeed = self.stats.attackspeed * (1 + (self.stats.attackSpeedPerlevel / 100 * lvl))
+        self.stats.ad += self.stats.adPerLevel * lvl
 
     def updateWithFrame(self, frameData):
         self.stats.armor = frameData['armor']

@@ -7,7 +7,6 @@ from dacite import from_dict
 
 @dataclass
 class ItemStats:
-
     hp: Union[float, None] = field(default=None)
     hpregen: Union[float, None] = field(default=None)
     mp: Union[float, None] = field(default=None)

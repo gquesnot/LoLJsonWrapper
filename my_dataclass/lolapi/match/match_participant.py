@@ -1,4 +1,3 @@
-import keyword
 from dataclasses import dataclass, field, asdict
 from typing import Any, Dict, Union
 
@@ -10,11 +9,8 @@ from my_dataclass.lol.item.item_combined import ItemCombined
 from my_dataclass.lol.summoner_spell import SummonerSpell
 from my_dataclass.lolapi.match.perk.perk import Perk
 from my_dataclass.lolapi.match.role_lane import RoleLane
-from my_dataclass.lolapi.match.team import Team
 from my_dataclass.lolapi.match.team_info import TeamInfo
-from my_dataclass.lolapi.summoner.profile_icon import ProfileIcon
 from my_dataclass.lolapi.summoner.summoner import Summoner
-from util.dataclass_function import mapDataClassFields
 
 
 @dataclass
@@ -114,7 +110,6 @@ class MatchParticipant:
 
     @classmethod
     def from_dict(cls, dc, data: Dict[str, Any], idx: int, team) -> "MatchParticipant":
-
         data['id'] = idx
         data['team'] = team.to_dict()
 
@@ -122,8 +117,8 @@ class MatchParticipant:
             "puuid": data['puuid'],
             "id": data['summonerId'],
             "summonerLevel": data['summonerLevel'],
-            "summonerName": data['summonerName'],
-            "profileIconId":  dc.lol.profileIcons[str(data['profileIcon'])].to_dict()
+            "name": data['summonerName'],
+            "profileIconId": dc.lol.profileIcons[str(data['profileIcon'])].to_dict()
         }
         champion = dc.lol.champions[data['championName']]
         champion.lvl = data['bountyLevel']
@@ -142,13 +137,13 @@ class MatchParticipant:
         data['summonerSpell1'] = s1.to_dict()
         data['summonerSpell2'] = s2.to_dict()
         data['perk'] = Perk.from_dict(dc, data["perks"]).to_dict()
-        data["item0"] = dc.lol.items[str(data['item0'])].to_dict() if data['item0'] != 0 else None
-        data["item1"] = dc.lol.items[str(data['item1'])].to_dict() if data['item1'] != 0 else None
-        data["item2"] = dc.lol.items[str(data['item2'])].to_dict() if data['item2'] != 0 else None
-        data["item3"] = dc.lol.items[str(data['item3'])].to_dict() if data['item3'] != 0 else None
-        data["item4"] = dc.lol.items[str(data['item4'])].to_dict() if data['item4'] != 0 else None
-        data["item5"] = dc.lol.items[str(data['item5'])].to_dict() if data['item5'] != 0 else None
-        data["item6"] = dc.lol.items[str(data['item6'])].to_dict() if data['item6'] != 0 else None
+        data["item0"] = dc.lol.getItemsById(data['item0'])
+        data["item1"] = dc.lol.getItemsById(data['item1'])
+        data["item2"] = dc.lol.getItemsById(data['item2'])
+        data["item3"] = dc.lol.getItemsById(data['item3'])
+        data["item4"] = dc.lol.getItemsById(data['item4'])
+        data["item5"] = dc.lol.getItemsById(data['item5'])
+        data["item6"] = dc.lol.getItemsById(data['item6'])
 
         data['nexusLost'] = data['nexusLost'] == 1
         data['nexusTakedowns'] = data['nexusTakedowns'] == 1

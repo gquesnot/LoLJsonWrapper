@@ -5,7 +5,7 @@ import requests
 
 
 def getValue(obj, key):
-    if isinstance(obj , dict):
+    if isinstance(obj, dict):
         return obj[key]
     else:
         return getattr(obj, key)

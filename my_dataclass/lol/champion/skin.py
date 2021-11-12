@@ -1,4 +1,3 @@
-
 from dataclasses import dataclass, asdict
 from typing import Any, Dict
 
@@ -19,6 +18,3 @@ class Skin:
 
     def to_dict(self) -> Dict[str, Any]:
         return asdict(self)
-
-
-

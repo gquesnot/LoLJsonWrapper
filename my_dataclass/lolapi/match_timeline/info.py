@@ -3,8 +3,8 @@ from dataclasses import dataclass, field, asdict
 from typing import Any, List, Dict
 
 from dacite import from_dict
-
 from my_dataclass.lolapi.base_info import BaseInfo
+
 from my_dataclass.lolapi.match_timeline.frame import Frame
 
 
@@ -13,7 +13,6 @@ class Info(BaseInfo):
     frames: List[Frame] = field(default=[])
     frameInterval: int = field(default=None)
     gameId: int = field(default=None)
-
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Info":

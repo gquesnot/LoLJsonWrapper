@@ -1,6 +1,6 @@
-import keyword
 from dataclasses import dataclass, field, asdict
-from typing import Any, Union, List, Dict
+from dataclasses import dataclass, field, asdict
+from typing import Any, Dict
 
 from dacite import from_dict
 
@@ -19,15 +19,14 @@ class GameInfo:
     mode: GameMode
     type: GameType
     name: str
-    version : str
+    version: str
     startTimestamp: int
     map: Map
     queue: Queue
     platformId: str
-    team1 : TeamInfo
-    team2 : TeamInfo
-    tournamentCode: str= field(default="")
-
+    team1: TeamInfo
+    team2: TeamInfo
+    tournamentCode: str = field(default="")
 
     @classmethod
     def from_dict(cls, dc, data: Dict[str, Any]) -> "GameInfo":
@@ -45,7 +44,6 @@ class GameInfo:
         data['id'] = data['gameId']
         data['team1'] = TeamInfo.from_dict(dc, data['teams'][0], 1).to_dict()
         data['team2'] = TeamInfo.from_dict(dc, data['teams'][1], 2).to_dict()
-
 
         return from_dict(cls, data=data)
 

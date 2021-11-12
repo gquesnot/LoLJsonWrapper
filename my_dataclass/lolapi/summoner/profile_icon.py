@@ -12,7 +12,7 @@ class ProfileIcon:
     image: Image
 
     @classmethod
-    def from_dict(cls, dc,data: Dict[str, Any]) -> Union["ProfileIcon", None]:
+    def from_dict(cls, dc, data: Dict[str, Any]) -> Union["ProfileIcon", None]:
         # data = {k if k in keyword.kwlist else f"{k}_": v for k, v in data.items()}
 
         if isinstance(data['id'], str):

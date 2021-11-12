@@ -1,4 +1,3 @@
-import keyword
 from dataclasses import dataclass, asdict
 from typing import Any, Dict, Union
 
@@ -9,7 +8,6 @@ from my_dataclass.lolapi.summoner.profile_icon import ProfileIcon
 
 @dataclass
 class Summoner:
-
     id: Union[str, None]
     accountId: Union[str, None]
     puuid: Union[str, None]
@@ -22,7 +20,8 @@ class Summoner:
     def from_dict(cls, dc, data: Dict[str, Any]) -> "Summoner":
         if "profileIconId" in data.keys():
             data['profileIcon'] = dc.lol.profileIcons[str(data['profileIconId'])].to_dict()
-        data['level'] = data['summonerLevel']
+        if "summonerLevel" in data.keys():
+            data['level'] = data['summonerLevel']
         return from_dict(cls, data=data)
 
     def to_dict(self) -> Dict[str, Any]:

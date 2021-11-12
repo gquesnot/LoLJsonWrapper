@@ -1,9 +1,8 @@
-from dataclasses import dataclass, field, asdict
+from dataclasses import dataclass, field
 from typing import Any, Union, List, Dict
 
 from dacite import from_dict
 
-import util
 from my_dataclass.wrapper_config import WrapperConfig
 from my_dataenum.config_index import ConfigIndex
 from util.base_wrapper_function import withoutDataDict
@@ -26,7 +25,7 @@ class JsonWrapperConfig(WrapperConfig):
             self.json = datas
 
     @classmethod
-    def from_dict(cls,idx:int, data: Dict[str, Any]) -> "JsonWrapperConfig":
+    def from_dict(cls, idx: int, data: Dict[str, Any]) -> "JsonWrapperConfig":
         data['id'] = idx
         if "path" not in data.keys():
             data['path'] = data['name']

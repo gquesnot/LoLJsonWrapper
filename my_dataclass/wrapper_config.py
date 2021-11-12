@@ -3,9 +3,6 @@ from typing import Any, Union, List, Dict
 
 from dacite import from_dict
 
-import util
-from my_dataenum.config_index import ConfigIndex
-
 
 @dataclass
 class WrapperConfig:
@@ -17,7 +14,9 @@ class WrapperConfig:
 
     def addData(self, key, newClass):
         if newClass is not None:
+
             if isinstance(newClass, self.class_):
+                key = key if isinstance(key, str) else str(key)
                 self.datas[key] = newClass
 
     @classmethod

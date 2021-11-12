@@ -1,6 +1,7 @@
 import enum
 
+
 @enum.unique
-class TraitType(enum.Enum):
+class TraitType(str, enum.Enum):
     ORIGIN = "origin"
     CLASS = "class"

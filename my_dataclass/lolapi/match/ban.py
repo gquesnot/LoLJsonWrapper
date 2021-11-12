@@ -1,4 +1,3 @@
-import keyword
 from dataclasses import dataclass, field, asdict
 from typing import Any, Dict
 

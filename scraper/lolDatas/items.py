@@ -28,5 +28,4 @@ class Item(scrapy.Item):
     magicpen = scrapy.Field()
     ah = scrapy.Field()
     healshieldpower = scrapy.Field()
-    name= scrapy.Field()
-
+    name = scrapy.Field()

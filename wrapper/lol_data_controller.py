@@ -35,6 +35,10 @@ class LolDataController():
         # self.loadItems()
         # self.loadScrawledItems()
 
+
+
+
+
     def checkVersion(self):
         try:
             with open(self.basePathVersions, "r") as f:
