@@ -57,24 +57,24 @@ if __name__ == '__main__':
         print(traitName, trait)
 
     ## Items
-    item: TftItem
+    item: Item
     for itemId, item in dc.tft.items.items():
         print(itemId, item)
 
     # Champions
-    champion: TftChampion
+    champion: Champion
     for championName, champion in dc.tft.champions.items():
         print(championName, champion)
 
     ## LOL
 
     ## Champions
-    champion: LolChampion
+    champion: Champion
     for champName, champion in dc.lol.champions.items():
         print(f"{champName}:", "\n    - ".join([skin.name for skin in champion.skins]))
 
     ## Items from dragon json
-    item: LolItem
+    item: Item
     for itemId, item in dc.lol.items.items():
         print(item.id, item.name)
 
