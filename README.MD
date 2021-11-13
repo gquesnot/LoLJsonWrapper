@@ -37,7 +37,7 @@
 
 ### Usage
 
-look the [main.py](main.py) file
+look the [main_exemple.py](main_exemple.py) file
 
 ### Install
 
