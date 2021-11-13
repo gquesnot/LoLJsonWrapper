@@ -4,7 +4,10 @@
 
 - auto update Dragon Data on lol and tft on demand
 - auto scrap missing items lol info
-- load only desired datas and get them as dataclasses [see](https://docs.python.org/3/library/dataclasses.html)
+- load json datas as dataclasses [see](https://docs.python.org/3/library/dataclasses.html)
+- parse api response to generate a better and more complete interface
+- fast load with pickle
+
 
 ## LoL
 ### Data
@@ -45,7 +48,6 @@ pip install -r requirements.txt
 ### TODO
 
 - API dataclasses Interface to reformat json data from api in better way
-- save pickle for fast load ? 
 
 
 

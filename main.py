@@ -1,43 +1,42 @@
-import json
+import time
 
-from util.init_lol_watcher import initLolWatcher
 from wrapper.lol_data_controller import LolDataController
 
 if __name__ == '__main__':
-    ## init function with his default parameter
-    ## update: update if needed
-    ## forceUpdate: update evryTime
-    ## showLog : show print init / load
+    ## init LolDataController with his default parameter look at the documentation for more info
     dc = LolDataController(update=True, forceUpdate=False, showLog=True)
 
     ## change jsonDownloadUrl in tftWrapper if new update and run the command below
     # dc.tft.downloadJson()
 
-    # #update if needed or forced and load all dataclasses , you can clean jsonData with param clean
-    ## dc.lol.load(clean=True)
-    dc.lol.load()
-
+    ## load method with his default parameter look at the documentation for more info
+    ## load all lol dataclasses
+    dc.lol.load(configsList=None, clean=True, withPickle=False, savePickle=False)  # without pickle : ~4.7s | with pickle ~0.019s
     ## load  all tft dataclasses
-    dc.tft.load()
+    dc.tft.load(configsList=None, clean=True, withPickle=False, savePickle=False)  # without pickle: ~0.02s | with pikle: ~0.001s
 
+    ## LOL API
     # lw = initLolWatcher()
 
     # jsonSummoner = lw.summoner.by_name("euw1", "random Iron")
+
+    ## SummonerClass
     # summonerClass = dc.lolApi.getSummoner(jsonSummoner)
-    #
+
     # match = lw.match.by_id("EUROPE", "EUW1_5551190982")
+    ## Match Class
     # matchClass = dc.lolApi.getMatch(match)
     # print(match.gameInfo.team1)
     # print(match.gameInfo.team2)
-    #
+
+    ## MatchTimeline class
     # matchTimeline = lw.match.timeline_by_match("EUROPE", "EUW1_5551190982")
     # matchTimelineClass = dc.lolApi.getMatchTimeline(matchTimeline)
-
-
 
     ## TFT
 
     ## Traits
+
     # for traitName, trait in dc.tft.traits.items():
     #     print(traitName, trait)
 

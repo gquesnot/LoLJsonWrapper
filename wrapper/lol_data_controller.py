@@ -13,6 +13,7 @@ class LolDataController():
     versionUrl = "https://ddragon.leagueoflegends.com/api/versions.json"
     downloadNewVersion = False
     basePath: str = "json_data"
+    picklePath: str = "pickle"
     basePathVersions: str
     lol: LolJsonWrapper = None
     tft: TftJsonWrapper = None
@@ -21,6 +22,12 @@ class LolDataController():
     version = None
 
     def __init__(self, update=True, forceUpdate=False, showLog=False):
+        """
+
+        :param update: if lol update will update
+        :param forceUpdate: force update
+        :param showLog: show info about loading etc
+        """
         self.showLog = showLog
         self.update = update
         self.ownCapitalize = ownCapitalize

@@ -94,7 +94,7 @@ class LolJsonWrapper(BaseJsonWrapper):
             "class_": ItemCombined,
         },
         {
-            "name": "runes",
+            "name": "runesPath",
             "path": "runes_reforged",
             "url": "http://ddragon.leagueoflegends.com/cdn/{}/data/en_US/runesReforged.json",
             "class_": RunePath,
@@ -103,6 +103,7 @@ class LolJsonWrapper(BaseJsonWrapper):
     ]
 
     itemsCrawlJson = {}
+    missingConfigToPickle = ["runes"]
     profileIcons: Dict[str, ProfileIcon] = dict()
     summonerSpells: Dict[str, SummonerSpell] = dict()
     seasons: Dict[str, Season] = dict()
@@ -119,8 +120,11 @@ class LolJsonWrapper(BaseJsonWrapper):
     def __init__(self, dc):
         super().__init__(dc)
 
-    def loadRunes(self):
-        config = self.getConfigByName("runes")
+
+
+
+    def loadRunesPath(self):
+        config = self.getConfigByName("runesPath")
 
         for path in config.json:
             runesSlots = []
@@ -133,6 +137,8 @@ class LolJsonWrapper(BaseJsonWrapper):
                 runesSlots.append(newRunes)
             myRunePath = RunePath.from_dict(path, runesSlots)
             self.runesPath[str(myRunePath.id)] = myRunePath
+            config.datas = self.runesPath
+        return config
 
     def initChampions(self):
         config = self.getConfigByName("champions")
@@ -226,6 +232,7 @@ class LolJsonWrapper(BaseJsonWrapper):
             return self.items[id_]
         else:
             return None
+
     def combineItems(self):
         resItems = dict()
         configItems = self.getConfigByName("items")

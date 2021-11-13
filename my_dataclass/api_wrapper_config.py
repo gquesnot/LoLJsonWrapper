@@ -3,7 +3,7 @@ from typing import Any, Dict
 
 from dacite import from_dict
 
-from my_dataclass.wrapper_config import WrapperConfig
+from util.wrapper_config import WrapperConfig
 from util.base_wrapper_function import withoutDataDict
 
 

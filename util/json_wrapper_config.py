@@ -3,7 +3,7 @@ from typing import Any, Union, List, Dict
 
 from dacite import from_dict
 
-from my_dataclass.wrapper_config import WrapperConfig
+from util.wrapper_config import WrapperConfig
 from my_dataenum.config_index import ConfigIndex
 from util.base_wrapper_function import withoutDataDict
 

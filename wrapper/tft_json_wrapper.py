@@ -44,7 +44,6 @@ class TftJsonWrapper(BaseJsonWrapper):
 
     def loadChampions(self):
         config = self.getConfigByName("champions")
-        traits = self.getDatas("traits")
         for champ in config.json:
             champion = config.class_.from_dict(self.dc, champ)
             config.addData(champion.name, champion)
