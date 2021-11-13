@@ -13,10 +13,10 @@ from my_dataclass.lolapi.summoner.profile_icon import ProfileIcon
 from my_dataclass.lolapi.summoner.rune import Rune
 from my_dataclass.lolapi.summoner.rune_path import RunePath
 from my_dataclass.lolapi.summoner.summoner import Summoner
-from my_dataclass.tft.champion.champion import Champion as TftChampion
-from my_dataclass.lol.champion.champion import Champion as LolChampion
-from my_dataclass.tft.item.item import Item as TftItem
-from my_dataclass.lol.item.item import Item as LolItem
+from my_dataclass.tft.champion.champion import Champion
+from my_dataclass.lol.champion.champion import Champion
+from my_dataclass.tft.item.item import Item
+from my_dataclass.lol.item.item import Item
 from my_dataclass.tft.trait.trait import Trait
 from util.init_lol_watcher import initLolWatcher
 from wrapper.lol_data_controller import LolDataController
